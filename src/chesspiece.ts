@@ -1,9 +1,19 @@
+import { Color } from "./color.js"
+
 export abstract class Chesspiece {
-    #xPos: number = 0
-    #yPos: number = 0
-    constructor(newX: number, newY: number)
+    #xPos: number
+    #yPos: number
+    #color: Color
+
+    constructor(newX: number, newY: number, color: Color)
     {
         this.setNewPosition(newX, newY)
+        this.setColor(color)
+    }
+
+    setColor(color: Color)
+    {
+        this.#color = color
     }
 
     setNewPosition(newX: number, newY: number)
@@ -16,6 +26,21 @@ export abstract class Chesspiece {
     {
         return [ this.#xPos, this.#yPos ]
     }
-    abstract isPositionValid(xPos: number, yPos: number): boolean
-    abstract move(newX: number, newY: number): boolean
+    
+    getColor(): Color
+    {
+        return this.#color
+    }
+
+    move(newX: number, newY: number): boolean 
+    {
+        const isNewMoveValid: boolean = this.isPositionValid(newX, newY)
+        if (isNewMoveValid === true)
+        {
+            this.setNewPosition(newX, newY)
+        }
+        return isNewMoveValid
+    }
+
+    abstract isPositionValid(newX: number, newY: number): boolean
 }

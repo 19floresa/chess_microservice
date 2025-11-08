@@ -12,8 +12,4 @@ export class Rook extends Chesspiece
         const [ x, y ] = this.getCurrentPosition()
         console.log(`${x}, ${y}`)
     }
-    move(newX: number, newY: number): boolean
-    {
-        return true
-    }
 }

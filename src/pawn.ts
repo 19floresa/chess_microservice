@@ -2,10 +2,10 @@ import { Chesspiece } from "./chesspiece.js"
 
 export class Pawn extends Chesspiece
 {
-    isPositionValid(xPos: number, yPos: number): boolean {
-        throw new Error("Method not implemented.");
-    }
-    move(newX: number, newY: number): boolean {
-        throw new Error("Method not implemented.");
+    isPositionValid(newX: number, newY: number): boolean {
+        const [ x, y ] = this.getCurrentPosition()
+        const xDif: number = newX - x
+        const yDif: number = newY - y
+        return (xDif === 1) && (yDif === 0)
     }
 }
