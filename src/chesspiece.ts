@@ -1,4 +1,5 @@
 import { Color } from "./color.js"
+import { Chessboard } from "./chessboard.js"
 
 export abstract class Chesspiece {
     #xPos: number
@@ -32,14 +33,25 @@ export abstract class Chesspiece {
         return this.#color
     }
 
+    isWithinValidRange(newX: number, newY: number): boolean 
+    {
+        const [ maxWidth, maxLength ] = [ 8, 8 ] // TODO: Fix
+        const [ minWidth, minLength ] = [ 0, 0 ]
+        const xValid = ((newX >= minWidth) && (newX < maxWidth))
+        const yValid = ((newY >= minLength) && (newY < maxLength))
+        return (xValid && yValid)
+    }
+
     move(newX: number, newY: number): boolean 
     {
+        const isValidRange: boolean = this.isWithinValidRange(newX, newY)
         const isNewMoveValid: boolean = this.isPositionValid(newX, newY)
-        if (isNewMoveValid === true)
+        const isMoveValid: boolean =  isValidRange && isNewMoveValid
+        if (isMoveValid)
         {
             this.setNewPosition(newX, newY)
         }
-        return isNewMoveValid
+        return isMoveValid
     }
 
     abstract isPositionValid(newX: number, newY: number): boolean
