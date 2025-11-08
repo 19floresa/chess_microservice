@@ -1,4 +1,4 @@
-class Chessboard 
+export class Chessboard 
 {
     readonly maxLength: number = 8
     readonly maxWidth: number = 8
@@ -7,5 +7,4 @@ class Chessboard
     {
         return [ this.maxWidth, this.maxLength ]
     }
-
 }

@@ -6,6 +6,5 @@ import { Queen } from "./src/queen.js"
 import { Rook } from "./src/rook.js"
 import { Color } from "./src/color.js"
 
-let newPiece: Rook = new Rook(1, 35, Color.black)
-console.log(newPiece)
-newPiece.print()
+let newPiece: Pawn = new Pawn(1, 1, Color.black)
+console.log(newPiece.move(0, 1))
