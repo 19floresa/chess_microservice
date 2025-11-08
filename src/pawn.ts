@@ -3,6 +3,8 @@ import { Color } from "./color.js"
 
 export class Pawn extends Chesspiece
 {
+    #firstMove: boolean = true
+
     calculateNewPosition(newX: number, newY: number): [ number, number]
     {
         const [ x, y ] = this.getCurrentPosition()
@@ -22,8 +24,31 @@ export class Pawn extends Chesspiece
         return [ xDif, yDif ]
     }
 
-    isPositionValid(newX: number, newY: number): boolean {
+    isPositionValid(newX: number, newY: number): boolean 
+    {
         const [ xDif, yDif ] = this.calculateNewPosition(newX, newY)
-        return (xDif === 1) && (yDif === 0)
+        console.log(`${xDif}, ${yDif}`)
+        if (this.#firstMove)
+        {
+            return (xDif >= 1) && (xDif <= 2) && (yDif === 0)
+        }
+        else
+        {
+            return (xDif === 1) && (yDif === 0)
+        }
+    }
+
+    /**
+     * This function overwritess the move function. Pawns can move 2 squares if its 
+     * the first move.
+     * @param newX New X location
+     * @param newY New Y location
+     * @returns true - if pawn can move to the new locatio. Otherwise false
+     */
+    move(newX: number, newY: number): boolean 
+    {
+        const isMovementSuccessfull: boolean = super.move(newX, newY)
+        this.#firstMove = false
+        return isMovementSuccessfull
     }
 }
