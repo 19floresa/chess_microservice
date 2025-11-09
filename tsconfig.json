@@ -4,5 +4,5 @@
       "module": "ES6",
       "target": "es6"
     },
-    "include": ["src/**/*"]
+    "include": ["src/**/*", "main.ts"]
 }

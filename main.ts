@@ -9,3 +9,7 @@ import { Color } from "./src/color.js"
 let newPiece: Pawn = new Pawn(7, 1, Color.black)
 console.log(newPiece.move(5, 1))
 console.log(newPiece.move(3, 1))
+
+const king = new King(7, 1, Color.black)
+console.log(king.move(6, 1))
+console.log(king.move(3, 1))
