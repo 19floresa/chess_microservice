@@ -42,6 +42,12 @@ export abstract class Chesspiece {
         return (xValid && yValid)
     }
 
+    isNotMoving(newX: number, newY: number): boolean 
+    {
+        const [ xDif, yDif ] = this.calcPosDiffByGreater(newX, newY)
+        return (xDif !== 0) && (yDif !== 0)
+    }
+
     calcPosDiffByGreater(newX: number, newY: number): [ number, number]
     {
         const [ x, y ] = this.getCurrentPosition()
@@ -89,9 +95,10 @@ export abstract class Chesspiece {
 
     move(newX: number, newY: number): boolean 
     {
-        const isValidRange: boolean = this.isWithinValidRange(newX, newY)
+        const isValidRange:   boolean = this.isWithinValidRange(newX, newY)
+        const isNotMoving:    boolean = this.isNotMoving(newX, newY)
         const isNewMoveValid: boolean = this.isPositionValid(newX, newY)
-        const isMoveValid: boolean =  isValidRange && isNewMoveValid
+        const isMoveValid: boolean = isValidRange && isNotMoving && isNewMoveValid
         if (isMoveValid)
         {
             this.setNewPosition(newX, newY)

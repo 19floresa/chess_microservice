@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "node  main.js",
-    "build": "npx tsc --build"
+    "start": "npx tsc --build && node main.js",
+    "build": "npx tsc --build",
+    "clean": "rm ./src/*.js *.js && clear"
   },
   "devDependencies": {
     "typescript": "^5.9.3"
