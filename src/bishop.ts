@@ -2,7 +2,10 @@ import { Chesspiece } from "./chesspiece.js"
 
 export class Bishop extends Chesspiece
 {
-    isPositionValid(xPos: number, yPos: number): boolean {
-        throw new Error("Method not implemented.");
+    isPositionValid(newX: number, newY: number): boolean {
+        const [ xDif, yDif ] = this.calcPosDiffByGreater(newX, newY)
+        const isMovementVerticalL   = (xDif === 1) && (yDif === 2)
+        const isMovementHorizontalL = (xDif === 2) && (yDif === 1)
+        return (isMovementVerticalL || isMovementHorizontalL)
     }
 }
