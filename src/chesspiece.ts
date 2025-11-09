@@ -42,6 +42,51 @@ export abstract class Chesspiece {
         return (xValid && yValid)
     }
 
+    calcPosDiffByGreater(newX: number, newY: number): [ number, number]
+    {
+        const [ x, y ] = this.getCurrentPosition()
+        let xDif: number = 0
+        let yDif: number = 0
+        if (newX < x)
+        {
+            xDif = x - newX
+        }
+        else
+        {
+            xDif = newX - x
+        }
+
+        if (newY < y)
+        {
+            yDif = y - newY
+        }
+        else
+        {
+            yDif = newY - y
+        }
+
+        return [ xDif, yDif ]
+    }
+
+    calcPosDiffByColor(newX: number, newY: number): [ number, number]
+    {
+        const [ x, y ] = this.getCurrentPosition()
+        const color = this.getColor()
+        let xDif: number = 0
+        let yDif: number = 0
+        if (color === Color.black)
+        {
+            xDif = x - newX
+            yDif = y - newY
+        }
+        else
+        {
+            xDif = newX - x
+            yDif = newY - y
+        }
+        return [ xDif, yDif ]
+    }
+
     move(newX: number, newY: number): boolean 
     {
         const isValidRange: boolean = this.isWithinValidRange(newX, newY)
