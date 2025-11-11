@@ -1,5 +1,4 @@
 import { Chesspiece } from "./chesspiece.js"
-import { Color } from "./color.js"
 
 export class Pawn extends Chesspiece
 {

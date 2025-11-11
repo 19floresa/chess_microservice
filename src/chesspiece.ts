@@ -1,20 +1,42 @@
-import { Color } from "./color.js"
 import { Chessboard } from "./chessboard.js"
+
+const dark: string = "dark"
+const light: string = "light"
 
 export abstract class Chesspiece {
     #xPos: number
     #yPos: number
-    #color: Color
+    #color: string
+    #name: string
 
-    constructor(newX: number, newY: number, color: Color)
+    constructor(newX: number, newY: number, color: string)
     {
         this.setNewPosition(newX, newY)
         this.setColor(color)
+        this.#setName()
     }
 
-    setColor(color: Color)
+    #setName(): void
     {
-        this.#color = color
+        this.#name = `${this.constructor.name.toLowerCase()}_${this.#color}`
+    }
+
+    getName(): string
+    {
+        return this.#name
+    }
+
+    setColor(color: string): void
+    {
+        const c = color.toLocaleLowerCase()
+        if (c === dark || c === light)
+        {
+            this.#color = c
+        }
+        else
+        {
+            throw Error("Invalid color.")
+        }
     }
 
     setNewPosition(newX: number, newY: number)
@@ -28,7 +50,7 @@ export abstract class Chesspiece {
         return [ this.#xPos, this.#yPos ]
     }
     
-    getColor(): Color
+    getColor(): string
     {
         return this.#color
     }
@@ -80,7 +102,7 @@ export abstract class Chesspiece {
         const color = this.getColor()
         let xDif: number = 0
         let yDif: number = 0
-        if (color === Color.black)
+        if (color === dark)
         {
             xDif = x - newX
             yDif = y - newY

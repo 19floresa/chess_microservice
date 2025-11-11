@@ -1,1 +1,1 @@
-{"root":["./src/bishop.ts","./src/chessboard.ts","./src/chesspiece.ts","./src/color.ts","./src/king.ts","./src/knight.ts","./src/pawn.ts","./src/queen.ts","./src/rook.ts","./main.ts"],"version":"5.9.3"}
+{"root":["./src/bishop.ts","./src/chessboard.ts","./src/chesspiece.ts","./src/king.ts","./src/knight.ts","./src/pawn.ts","./src/queen.ts","./src/rook.ts","./main.ts"],"version":"5.9.3"}
