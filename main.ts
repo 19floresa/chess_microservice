@@ -4,13 +4,18 @@ import { Knight } from "./src/knight.js"
 import { Pawn } from "./src/pawn.js"
 import { Queen } from "./src/queen.js"
 import { Rook } from "./src/rook.js"
+import { Chessboard } from "./src/chessboard.js"
 
+const board = new Chessboard()
 
-const pawn: Pawn = new Pawn(7, 1, "LIGHT")
-console.log("Pawn-----")
-console.log(pawn.move(5, 1))
-console.log(pawn.move(3, 1))
-console.log(pawn.getName())
+const piece = board.findPiece(0, 0, "light")
+console.log(piece.move(0, 7))
+
+// const pawn: Pawn = new Pawn(7, 1, "LIGHT")
+// console.log("Pawn-----")
+// console.log(pawn.move(5, 1))
+// console.log(pawn.move(3, 1))
+// console.log(pawn.getName())
 
 // const king = new King(7, 1, Color.black)
 // console.log("King-----")
