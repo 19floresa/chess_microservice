@@ -1,7 +1,24 @@
 import { useState } from 'react'
+
 import king_dark from './assets/king_dark.svg'
+import queen_dark from "./assets/queen_dark.svg"
+import rook_dark from "./assets/rook_dark.svg"
+import pawn_dark from "./assets/pawn_dark.svg"
+import bishop_dark from "./assets/bishop_dark.svg"
+import knight_dark from "./assets/knight_dark.svg"
+
+import king_light from './assets/king_light.svg'
+import queen_light from "./assets/queen_light.svg"
+import rook_light from "./assets/rook_light.svg"
+import pawn_light from "./assets/pawn_light.svg"
+import bishop_light from "./assets/bishop_light.svg"
+import knight_light from "./assets/knight_light.svg"
+
+
 // import viteLogo from '/vite.svg'
 import './App.css'
+
+//import { ChessBoard } from "../../src/chessboard.ts"
 
 interface positionProp 
 {
@@ -9,7 +26,25 @@ interface positionProp
   y: number
 }
 
-function chooseColor( {x, y}: positionProp): string
+const images =
+{
+  "king_dark":    king_dark,
+  "queen_dark":   queen_dark,
+  "rook_dark":    rook_dark,
+  "pawn_dark":    pawn_dark,
+  "bishop_dark":  bishop_dark,
+  "knight_dark":  knight_dark,
+  "king_light":   king_light,
+  "queen_light":  queen_light,
+  "rook_light":   rook_light,
+  "pawn_light":   pawn_light,
+  "bishop_light": bishop_light,
+  "knight_light": knight_light,
+}
+
+//const g = new ChessBoard()
+
+function chooseSquareColor( {x, y}: positionProp): string
 {
   const xPos = x % 2
   const yPos = y % 2
@@ -22,15 +57,38 @@ function chooseColor( {x, y}: positionProp): string
   return "dark"
 }
 
+function chooseImg(name: string)
+{
+  const img = images[name]
+  if (img !== undefined)
+  {
+    return img
+  }
+
+  return null
+}
+
 function Square({ x, y }: positionProp)
 {
-  const color: string = chooseColor({ x, y })
+  const color: string = chooseSquareColor({ x, y })
+  const name: string = (x % 2 === 0) ? "rook_light" : "pawn_dark"
+  const img: any = chooseImg(name)
   const onSquareClick = () => console.log(`(${x},${y})`)
-  return ( 
+
+  if (img !== null)
+  {
+    return ( 
       <button className={`square ${color}`} onClick={onSquareClick} >
-        <img src={king_dark}  alt="King Chess Piece." className='image'/>
+        <img src={img}  alt={img} className='image'/>
       </button>
   )
+  }
+  else
+  {
+    return ( 
+      <button className={`square ${color}`} onClick={onSquareClick}/>
+  )
+  }
 }
 
 function ChessRow({ y }: { y: number} )
@@ -53,6 +111,7 @@ function ChessRow({ y }: { y: number} )
 
 function App() 
 {
+  //const [ chessboard, setChessboard ] = useState(new ChessBoard())
   return (
     <>
       <div>
