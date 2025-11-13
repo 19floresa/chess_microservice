@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import king from './assets/king_dark.svg'
+import king_dark from './assets/king_dark.svg'
 // import viteLogo from '/vite.svg'
 import './App.css'
 
@@ -9,28 +9,27 @@ interface positionProp
   y: number
 }
 
-function Square({ x, y }: positionProp)
+function chooseColor( {x, y}: positionProp): string
 {
   const xPos = x % 2
   const yPos = y % 2
-  let color: string = ""
-  if (xPos === 0 && yPos === 0) // even rows
+  if ((xPos === 0 && yPos === 0) || // even rows pattern
+      (xPos === 1 && yPos === 1))   // odd rows pattern
   {
-    color = "light"
+    return "light"
   }
-  else if (xPos === 1 && yPos === 1) // odd rows
-  {
-    color = "light"
-  }
-  else
-  {
-    color = "dark"
-  }
+  
+  return "dark"
+}
 
+function Square({ x, y }: positionProp)
+{
+  const color: string = chooseColor({ x, y })
   const onSquareClick = () => console.log(`(${x},${y})`)
   return ( 
       <button className={`square ${color}`} onClick={onSquareClick} >
-        <img src={king}  alt="King Chess Piece." className='image'/></button>
+        <img src={king_dark}  alt="King Chess Piece." className='image'/>
+      </button>
   )
 }
 
@@ -52,7 +51,8 @@ function ChessRow({ y }: { y: number} )
   )
 }
 
-function App() {
+function App() 
+{
   return (
     <>
       <div>
@@ -83,7 +83,7 @@ function App() {
 //         </a>
 //       </div>
 //       <h1>Vite + React</h1>
-//       <div className="card">
+//       <divsrc className="card">
 //         <button onClick={() => setCount((count) => count + 1)}>
 //           count is {count}
 //         </button>

@@ -47,8 +47,8 @@
 }
 
 .square:active {
-  border-color: 1px #777;
-  background-color: blue;
+  border-color: 1px #afbd71;
+  background-color: #afbd71;
 }
 
 .dark {
