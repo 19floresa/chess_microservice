@@ -23,7 +23,6 @@ export class Queen extends Chesspiece
     isPositionValid(newX: number, newY: number): boolean {
         const isValidMoveRook: boolean = this.checkRook(newX, newY)
         const isValidMoveBishop: boolean = this.checkBishop(newX, newY)
-        console.log(`Rook: ${isValidMoveRook}, Bishop: ${isValidMoveBishop}`)
         return (isValidMoveRook || isValidMoveBishop)
     }
 }

@@ -28,7 +28,7 @@ export abstract class Chesspiece {
 
     setColor(color: string): void
     {
-        const c = color.toLocaleLowerCase()
+        const c = color.toLowerCase()
         if (c === dark || c === light)
         {
             this.#color = c
