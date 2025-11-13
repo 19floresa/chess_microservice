@@ -1,82 +1,80 @@
-import { Bishop } from "./bishop.js"
 import { Chesspiece } from "./chesspiece.js"
-import { King } from "./king.js"
-import { Knight } from "./knight.js"
-import { Pawn } from "./pawn.js"
-import { Queen } from "./queen.js"
-import { Rook } from "./rook.js"
-
-interface boardProp {
-    king: King, 
-    queen: Queen, 
-    bishop: Array<Bishop>, 
-    pawn: Array<Pawn>, 
-    knight: Array<Knight>,
-    rook: Array<Rook>
-}
+import { playerProp, Player } from "./player.js"
 
 export class Chessboard 
 {
     readonly maxLength: number = 8
     readonly maxWidth: number = 8
 
-    board: { dark: boardProp, light: boardProp } = null
+    #player1: Player = null // black player (dark)
+    #player2: Player = null // white player (light)
+
+    #gameState: string
+    #gameBoard: string[][]
 
     constructor()
     {
-        this.setupBoard()
-    }
+        this.#player1 = new Player("dark")
+        this.#player2 = new Player("light")
+        this.#gameState = "light"
 
-    setupBoard(): void
-    {
-        const setup = (c: string) =>
+        this.#gameBoard = new Array(this.maxLength)
+        for (let i = 0; i < this.maxLength; i++)
         {
-            const x = (c === "dark" ) ? 7 : 0;
-            const pawnX = (c === "dark" ) ? 6 : 1;
-            const data: boardProp = {
-                king: new King(x, 4, c),
-                queen: new Queen(x, 3, c),
-                bishop: [ new Bishop(x, 2, c), new Bishop(x, 5, c) ],
-                pawn: [],
-                knight: [ new Knight(x, 1, c), new Knight(x, 6, c) ],
-                rook: [ new Rook(x, 0, c), new Rook(x, 7, c) ]
-            }
-
-            for (let i = 0; i < 8; i++)
-            {
-                data.pawn.push(new Pawn(pawnX, i, c))
-            }
-            return data
+            this.#gameBoard[i] = new Array(this.maxWidth).fill("")
         }
 
-        this.board = { dark: setup("dark"), light: setup("light") }
-    }
-
-    getAllPieces(color: string): Chesspiece[]
-    {
-        const { king, queen, bishop, pawn, knight, rook } = this.board[color]
-        return [ king, queen, ...bishop, ...knight, ...rook, ...pawn]
-    }
-
-    findPiece(xPos: number, yPos: number, color: string): Chesspiece
-    {
-        const pieces: Array<Chesspiece>  = this.getAllPieces(color)
-        for (const piece of pieces)
+        for (const piece of this.#player1.getAllPieces())
         {
-            const [ pieceX, pieceY ] = piece.getCurrentPosition()
-            console.log(typeof piece)
-            if ((xPos === pieceX) && (yPos === pieceY))
-            {
-                return piece
-            }
+            const [ x, y ] = piece.getCurrentPosition()
+            this.#gameBoard[x][y] = piece.getName()
         }
 
-        return null
+        for (const piece of this.#player2.getAllPieces())
+        {
+            const [ x, y ] = piece.getCurrentPosition()
+            this.#gameBoard[x][y] = piece.getName()
+        }
     }
-
+    
+    isWithinValidRange(newX: number, newY: number): boolean 
+    {
+        const [ maxWidth, maxLength ] = this.getBoardDimensions()
+        const [ minWidth, minLength ] = [ 0, 0 ]
+        const xValid = ((newX >= minWidth) && (newX < maxWidth))
+        const yValid = ((newY >= minLength) && (newY < maxLength))
+        return (xValid && yValid)
+    }
 
     getBoardDimensions(): [ number, number]
     {
         return [ this.maxWidth, this.maxLength ]
+    }
+
+    getPieceName(xPos: number, yPos: number): string
+    {
+        if (!this.isWithinValidRange(xPos, yPos)) return ""
+        return this.#gameBoard[xPos][yPos]
+    }
+
+    changePlayer()
+    {
+        this.#gameState = (this.#gameState === "dark") ?  "light" : "dark"
+    }
+
+    getCurrentPlayer(): string
+    {
+        return this.#gameState
+    }
+
+    move(xPos: number, yPos: number, playerColor: string): boolean
+    {
+        if (!this.isWithinValidRange(xPos, yPos)) return false
+
+       // const player: Player = (playerColor === "dark") ? this.#player1 : this.#player2
+
+
+        this.changePlayer()        
+        return true
     }
 }
