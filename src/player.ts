@@ -26,20 +26,20 @@ export class Player
 
     #setupPlayer(color: string): void
     {
-        const row1 = (color === "dark" ) ? 7 : 0;
-        const row2 = (color === "dark" ) ? 6 : 1;
+        const row1 = (color === "dark" ) ? 0 : 7;
+        const row2 = (color === "dark" ) ? 1 : 6;
         const data: playerProp = {
-            king: new King(row1, 4, color),
-            queen: [ new Queen(row1, 3, color) ],
-            bishop: [ new Bishop(row1, 2, color), new Bishop(row1, 5, color) ],
+            king: new King(4, row1, color),
+            queen: [ new Queen(3, row1, color) ],
+            bishop: [ new Bishop(2, row1, color), new Bishop(5, row1, color) ],
             pawn: [],
-            knight: [ new Knight(row1, 1, color), new Knight(row1, 6, color) ],
-            rook: [ new Rook(row1, 0, color), new Rook(row1, 7, color) ]
+            knight: [ new Knight(1, row1, color), new Knight( 6, row1, color) ],
+            rook: [ new Rook(0, row1, color), new Rook(7, row1, color) ]
         }
 
         for (let i = 0; i < 8; i++)
         {
-            data.pawn.push(new Pawn(row2, i, color))
+            data.pawn.push(new Pawn(i, row2, color))
         }
 
         this.#playerPieces = data
