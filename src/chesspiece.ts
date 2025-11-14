@@ -112,9 +112,6 @@ export abstract class Chesspiece {
             xDif = newX - x
             yDif = newY - y
         }
-        console.log([x, y])
-        console.log([newX,newY])
-        console.log([xDif, yDif])
         return [ xDif, yDif ]
     }
 
