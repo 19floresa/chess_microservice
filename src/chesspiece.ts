@@ -102,7 +102,7 @@ export abstract class Chesspiece {
         const color = this.getColor()
         let xDif: number = 0
         let yDif: number = 0
-        if (color === dark)
+        if (color === light)
         {
             xDif = x - newX
             yDif = y - newY
@@ -112,6 +112,9 @@ export abstract class Chesspiece {
             xDif = newX - x
             yDif = newY - y
         }
+        console.log([x, y])
+        console.log([newX,newY])
+        console.log([xDif, yDif])
         return [ xDif, yDif ]
     }
 
