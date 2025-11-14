@@ -9,11 +9,11 @@ export class Pawn extends Chesspiece
         const [ xDif, yDif ] = this.calcPosDiffByColor(newX, newY)        
         if (this.#firstMove)
         {
-            return (xDif >= 1) && (xDif <= 2) && (yDif === 0)
+            return (xDif === 0) && (yDif >= 1) && (yDif <= 2)
         }
         else
         {
-            return (xDif === 1) && (yDif === 0)
+            return (xDif === 0) && (yDif === 1)
         }
     }
 

@@ -82,8 +82,9 @@ export class Chessboard
         return this.#gameBoard[yPos][xPos]
     }
 
-    #setPiece(piece: Chesspiece, oldX: number, oldY: number, newX: number, newY: number): void
+    #setPiece(piece: Chesspiece, oldX: number, oldY: number): void
     {
+        const [ newX, newY ] = piece.getCurrentPosition()
         this.#gameBoard[oldY][oldX] = null
         this.#gameBoard[newY][newX] = piece
     }
@@ -94,16 +95,17 @@ export class Chessboard
     {
         if (!this.isWithinValidRange(newX, newY)) return false
 
-       //const player: Player = (this.getCurrentPlayer() === "dark") ? this.#player1 : this.#player2
-
        const piece: Chesspiece = this.#getPiece(oldX, oldY)
+       const playerColor: string = this.getCurrentPlayer()
+
+       if (playerColor !== piece.getColor()) return false
+
        const didPieceMove: boolean = piece.move(newX, newY)
        if (didPieceMove === true)
        {
             this.changePlayer() 
+            this.#setPiece(piece, oldX, oldY,)
        }
-
-       this.#setPiece(piece, oldX, oldY, newX, newY)
        
        return true
     }
