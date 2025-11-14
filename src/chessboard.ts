@@ -10,7 +10,7 @@ export class Chessboard
     #player2: Player = null // white player (light)
 
     #gameState: string
-    #gameBoard: string[][]
+    #gameBoard: Chesspiece[][]
 
     constructor()
     {
@@ -21,19 +21,19 @@ export class Chessboard
         this.#gameBoard = new Array(this.maxLength)
         for (let i = 0; i < this.maxLength; i++)
         {
-            this.#gameBoard[i] = new Array(this.maxWidth).fill("")
+            this.#gameBoard[i] = new Array(this.maxWidth).fill(null)
         }
 
         for (const piece of this.#player1.getAllPieces())
         {
             const [ x, y ] = piece.getCurrentPosition()
-            this.#gameBoard[x][y] = piece.getName()
+            this.#gameBoard[y][x] = piece
         }
 
         for (const piece of this.#player2.getAllPieces())
         {
             const [ x, y ] = piece.getCurrentPosition()
-            this.#gameBoard[x][y] = piece.getName()
+            this.#gameBoard[y][x] = piece
         }
     }
     
@@ -54,7 +54,17 @@ export class Chessboard
     getPieceName(xPos: number, yPos: number): string
     {
         if (!this.isWithinValidRange(xPos, yPos)) return ""
-        return this.#gameBoard[xPos][yPos]
+        const piece: Chesspiece = this.#gameBoard[yPos][xPos]
+        if (piece === null) return ""
+        return piece.getName()
+    }
+
+    getPieceColor(xPos: number, yPos: number): string
+    {
+        if (!this.isWithinValidRange(xPos, yPos)) return ""
+        const piece: Chesspiece = this.#gameBoard[yPos][xPos]
+        if (piece === null) return ""
+        return piece.getColor()
     }
 
     changePlayer()
@@ -67,14 +77,34 @@ export class Chessboard
         return this.#gameState
     }
 
-    move(xPos: number, yPos: number, playerColor: string): boolean
+    #getPiece(xPos: number, yPos: number): Chesspiece
     {
-        if (!this.isWithinValidRange(xPos, yPos)) return false
+        return this.#gameBoard[yPos][xPos]
+    }
 
-       // const player: Player = (playerColor === "dark") ? this.#player1 : this.#player2
+    #setPiece(piece: Chesspiece, oldX: number, oldY: number, newX: number, newY: number): void
+    {
+        this.#gameBoard[oldY][oldX] = null
+        this.#gameBoard[newY][newX] = piece
+    }
 
+    move({ oldX, oldY, 
+           newX, newY }: { oldX: number, oldY: number, 
+                           newX: number, newY: number }): boolean
+    {
+        if (!this.isWithinValidRange(newX, newY)) return false
 
-        this.changePlayer()        
-        return true
+       //const player: Player = (this.getCurrentPlayer() === "dark") ? this.#player1 : this.#player2
+
+       const piece: Chesspiece = this.#getPiece(oldX, oldY)
+       const didPieceMove: boolean = piece.move(newX, newY)
+       if (didPieceMove === true)
+       {
+            this.changePlayer() 
+       }
+
+       this.#setPiece(piece, oldX, oldY, newX, newY)
+       
+       return true
     }
 }

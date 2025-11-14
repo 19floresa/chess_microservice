@@ -6,7 +6,7 @@ export class Pawn extends Chesspiece
 
     isPositionValid(newX: number, newY: number): boolean 
     {
-        const [ xDif, yDif ] = this.calcPosDiffByColor(newX, newY)
+        const [ xDif, yDif ] = this.calcPosDiffByColor(newX, newY)        
         if (this.#firstMove)
         {
             return (xDif >= 1) && (xDif <= 2) && (yDif === 0)
