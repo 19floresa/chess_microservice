@@ -115,18 +115,22 @@ export abstract class Chesspiece {
         return [ xDif, yDif ]
     }
 
+    calcPosDiff(newX: number, newY: number): [ number, number]
+    {
+        const [ x, y ] = this.getCurrentPosition()
+        const xDif: number = x - newX
+        const yDif: number = y - newY
+        return [ xDif, yDif ]
+    }
+
     move(newX: number, newY: number): boolean 
     {
         const isValidRange:   boolean = this.isWithinValidRange(newX, newY)
         const isMoving:    boolean = this.isMoving(newX, newY)
         const isNewMoveValid: boolean = this.isPositionValid(newX, newY)
-        const isMoveValid: boolean = isValidRange && isMoving && isNewMoveValid
-        if (isMoveValid)
-        {
-            this.setNewPosition(newX, newY)
-        }
-        return isMoveValid
+        return isValidRange && isMoving && isNewMoveValid
     }
 
     abstract isPositionValid(newX: number, newY: number): boolean
+    abstract checkJumpedSquares(gameBoard: Chesspiece[][], newX: number, newY: number): boolean
 }
