@@ -1,5 +1,9 @@
+import { Bishop } from "./bishop.js"
 import { Chesspiece } from "./chesspiece.js"
+import { Knight } from "./knight.js"
 import { playerProp, Player } from "./player.js"
+import { Queen } from "./queen.js"
+import { Rook } from "./rook.js"
 
 export class Chessboard 
 {
@@ -72,9 +76,14 @@ export class Chessboard
         this.#gameState = (this.#gameState === "dark") ?  "light" : "dark"
     }
 
-    getCurrentPlayer(): string
+    getCurrentState(): string
     {
         return this.#gameState
+    }
+
+    #getPlayer(color: string)
+    {
+        return (color === "dark") ? this.#player1 : this.#player2
     }
 
     #getPiece(xPos: number, yPos: number): Chesspiece
@@ -110,7 +119,7 @@ export class Chessboard
         if (!this.isWithinValidRange(oldX, oldY)) return false
 
         const piece: Chesspiece = this.#getPiece(oldX, oldY)
-        const playerColor: string = this.getCurrentPlayer()
+        const playerColor: string = this.getCurrentState()
        
         if (piece === null)                                 return false // ignore empty squares
         if (playerColor !== piece.getColor())               return false // Cant move pieces from other player
@@ -118,9 +127,69 @@ export class Chessboard
         if (!this.#checkNewSquare(playerColor, newX, newY)) return false // Dont move to square of our pieces
         if (!this.#checkSquaresJumped(piece, newX, newY))   return false // Check all squares jumped over are empty
 
+        const oldPiece: Chesspiece = this.#getPiece(newX, newY)
+        if (oldPiece !== null) // remove piece from player
+        {
+            const otherPlayerColor: string = (playerColor === "dark") ?  "light" : "dark"
+            const otherPlayer: Player =  this.#getPlayer(otherPlayerColor)
+            otherPlayer.removePiece(oldPiece)
+            console.log(`Removed: ${oldPiece.getName()}`)
+        }
+
         this.#setPiece(piece, newX, newY)
-        this.changePlayer() 
-       
-       return true
+        this.changePlayer()
+
+        // const [ targetName, targetColor] = piece.getName().split("_")
+        // if ((targetName === "pawn"))
+        // {
+        //     if ((targetColor === "dark") && (newY === 7))   
+        //     {
+        //         this.#promote(newX, newY)
+        //     }
+        //     else if ((targetColor === "light") && (newY === 0))
+        //     {
+        //         this.#promote(newX, newY)
+        //     }
+        // } 
+        
+        return true
+    }
+
+    #promote(x: number, y: number)
+    {
+        const piece: Chesspiece = this.#getPiece(x, y)
+        const color: string = piece.getColor()
+        let val: string = ""
+        let n: number = -1
+        while(true)
+        {
+            val = prompt("Promote Pawn: Queen (1), Rook (2), Bishop (3), Knight (4):")
+            n = Number(val)
+            if ((n > 0) && (n < 5)) break
+        }
+
+        let newPiece: Chesspiece = null
+        switch(n)
+        {
+            case 1:
+                newPiece = new Queen(x, y, color)
+                break
+            case 2:
+                newPiece = new Rook(x, y, color)
+                break
+            case 3:
+                newPiece = new Bishop(x, y, color)
+                break
+            case 4:
+                newPiece = new Knight(x, y, color)
+                break
+            default:
+                throw Error(`Pawn pronotion is not valid. ${n}`)
+        }
+
+        const player: Player = this.#getPlayer(color)
+        player.removePiece(piece)
+        player.addPiece(newPiece)
+        this.#gameBoard[y][x] = newPiece
     }
 }

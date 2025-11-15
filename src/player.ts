@@ -68,14 +68,14 @@ export class Player
 
     removePiece(piece: Chesspiece): boolean
     {
+        const [ targetName, targetColor ] = piece.getName().split("_")
+        const [ xPos, yPos ] = piece.getCurrentPosition()
         const find = (elem: Chesspiece) => 
         {
             const [ x, y ] = elem.getCurrentPosition()
             return (xPos === x) && (yPos === y)
         }
 
-        const [ targetName, targetColor ] = piece.getName().split("_")
-        const [ xPos, yPos ] = piece.getCurrentPosition()
         switch(targetName)
         {
             case "queen":
@@ -97,5 +97,22 @@ export class Player
         }
 
         return false
+    }
+
+    addPiece(newPiece: Chesspiece): void
+    {
+        const [ targetName, targetColor ] = newPiece.getName().split("_")
+        switch(targetName)
+        {
+            case "queen":
+            case "bishop":
+            case "pawn":
+            case "knight":
+            case "rook":
+                this.#playerPieces[targetName].push(newPiece)
+                break
+            default:
+                throw Error(`Cannot remove this piece: ${targetName}`)
+        }
     }
 }

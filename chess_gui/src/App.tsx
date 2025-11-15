@@ -120,7 +120,7 @@ function App()
 
   function handleClick({x, y}: positionProp): void
   {
-    const player:     string = chessboard.getCurrentPlayer()
+    const player:     string = chessboard.getCurrentState()
     const pieceColor: string = chessboard.getPieceColor(x, y)
     
     const [ xPos, yPos ] = firstPick
