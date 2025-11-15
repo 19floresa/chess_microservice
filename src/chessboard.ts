@@ -82,11 +82,24 @@ export class Chessboard
         return this.#gameBoard[yPos][xPos]
     }
 
-    #setPiece(piece: Chesspiece, oldX: number, oldY: number): void
+    #setPiece(piece: Chesspiece, newX: number, newY: number): void
     {
-        const [ newX, newY ] = piece.getCurrentPosition()
+        const [ oldX, oldY ] = piece.getCurrentPosition()
+        piece.setNewPosition(newX, newY)
         this.#gameBoard[oldY][oldX] = null
         this.#gameBoard[newY][newX] = piece
+    }
+
+    #checkNewSquare(playerColor: string, newX: number, newY: number)
+    {
+        const piece: Chesspiece = this.#getPiece(newX, newY)
+        // TODO: Check that king wont be put in check
+        return ((piece === null) || (piece.getColor() !== playerColor))
+    }
+
+    #checkSquaresJumped(piece: Chesspiece, newX: number, newY: number): boolean
+    {
+        return piece.checkJumpedSquares(this.#gameBoard, newX, newY)
     }
 
     move({ oldX, oldY, 
@@ -94,18 +107,19 @@ export class Chessboard
                            newX: number, newY: number }): boolean
     {
         if (!this.isWithinValidRange(newX, newY)) return false
+        if (!this.isWithinValidRange(oldX, oldY)) return false
 
-       const piece: Chesspiece = this.#getPiece(oldX, oldY)
-       const playerColor: string = this.getCurrentPlayer()
+        const piece: Chesspiece = this.#getPiece(oldX, oldY)
+        const playerColor: string = this.getCurrentPlayer()
+       
+        if (piece === null)                                 return false // ignore empty squares
+        if (playerColor !== piece.getColor())               return false // Cant move pieces from other player
+        if (!piece.move(newX, newY))                        return false // ignore invalid moves
+        if (!this.#checkNewSquare(playerColor, newX, newY)) return false // Dont move to square of our pieces
+        if (!this.#checkSquaresJumped(piece, newX, newY))   return false // Check all squares jumped over are empty
 
-       if (playerColor !== piece.getColor()) return false
-
-       const didPieceMove: boolean = piece.move(newX, newY)
-       if (didPieceMove === true)
-       {
-            this.changePlayer() 
-            this.#setPiece(piece, oldX, oldY,)
-       }
+        this.#setPiece(piece, newX, newY)
+        this.changePlayer() 
        
        return true
     }
