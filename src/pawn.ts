@@ -17,17 +17,18 @@ export class Pawn extends Chesspiece
         }
     }
 
-    /**
-     * This function overwritess the move function. Pawns can move 2 squares if its 
-     * the first move.
-     * @param newX New X location
-     * @param newY New Y location
-     * @returns true - if pawn can move to the new locatio. Otherwise false
-     */
-    move(newX: number, newY: number): boolean 
+    checkJumpedSquares(gameBoard: Chesspiece[][], newX: number, newY: number): boolean
     {
-        const isMovementSuccessfull: boolean = super.move(newX, newY)
+        const board: Chesspiece[][] = structuredClone(gameBoard)
+        const [ oldX, oldY ] = this.getCurrentPosition()
+        const yDif: number = oldY - newY
+        if (Math.abs(yDif) === 2)
+        {
+            // Moving over 2 squares
+            const dif: number = (yDif === -2) ? 1 : -1
+            if (board[oldY + dif][oldX] !== null) return false
+        }
         this.#firstMove = false
-        return isMovementSuccessfull
+        return true
     }
 }

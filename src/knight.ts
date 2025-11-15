@@ -9,4 +9,9 @@ export class Knight extends Chesspiece
         const isMovementHorizontalL = (xDif === 2) && (yDif === 1)
         return (isMovementVerticalL || isMovementHorizontalL)
     }
+    
+    checkJumpedSquares(gameBoard: Chesspiece[][], newX: number, newY: number): boolean
+    {
+        return true // skip
+    }
 }
