@@ -1,5 +1,5 @@
 import { expect, test } from "vitest"
-import { Bishop } from "./src/bishop.js"
+import { Bishop } from "../../src/bishop.js"
 
 
 function generateBoard()
