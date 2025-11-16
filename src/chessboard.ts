@@ -139,19 +139,21 @@ export class Chessboard
         this.#setPiece(piece, newX, newY)
         this.changePlayer()
 
-        // const [ targetName, targetColor] = piece.getName().split("_")
-        // if ((targetName === "pawn"))
-        // {
-        //     if ((targetColor === "dark") && (newY === 7))   
-        //     {
-        //         this.#promote(newX, newY)
-        //     }
-        //     else if ((targetColor === "light") && (newY === 0))
-        //     {
-        //         this.#promote(newX, newY)
-        //     }
-        // } 
+        const [ targetName, targetColor] = piece.getName().split("_")
+        if ((targetName === "pawn"))
+        {
+            if ((targetColor === "dark") && (newY === 7))   
+            {
+                this.#promote(newX, newY)
+            }
+            else if ((targetColor === "light") && (newY === 0))
+            {
+                this.#promote(newX, newY)
+            }
+        } 
         
+        // TODO: win condition
+        // TODO: stalement
         return true
     }
 

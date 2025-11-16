@@ -27,4 +27,6 @@ export class Rook extends Chesspiece
         }
         return true
     }
+
+    // TODO: Implement castling
 }
