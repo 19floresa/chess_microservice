@@ -5,10 +5,14 @@
   "type": "module",
   "scripts": {
     "start": "npx tsc --build && node main.js",
+    "test": "vitest",
     "build": "npx tsc --build",
     "clean": "rm ./src/*.js *.js && clear"
   },
   "devDependencies": {
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "vitest": "^4.0.9"
   }
 }

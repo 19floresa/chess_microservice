@@ -8,8 +8,8 @@ import { Chessboard } from "./src/chessboard.js"
 
 const board = new Chessboard()
 
-const piece = board.findPiece(0, 0, "light")
-console.log(piece.move(0, 7))
+// const piece = board.findPiece(0, 0, "light")
+// console.log(piece.move(0, 7))
 
 // const pawn: Pawn = new Pawn(7, 1, "LIGHT")
 // console.log("Pawn-----")
