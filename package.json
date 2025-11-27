@@ -13,6 +13,9 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "next": "^16.0.3",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "vitest": "^4.0.9"
   }
 }
