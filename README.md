@@ -4,7 +4,7 @@ Node
 
 # Install
 ```bash
-git clone git@github.com:19floresa/chess_microservice.git
+git clone -b next_router_test git@github.com:19floresa/chess_microservice.git
 ```
 
 # Front End Server
