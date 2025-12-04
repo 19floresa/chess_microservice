@@ -8,15 +8,17 @@ async function registerUser(username: string, password: string)
     { 
       method: 'POST', 
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username: "alex", password:"1234"})
+      body: JSON.stringify({ username, password })
     }) 
 }
  
-export async function GET(request: NextRequest) 
+export async function GET(request: Request) 
 {
   try 
   {
-    const res = await registerUser("Alex", "1234")
+    const resClient = request.json()
+    console.log(resClient)
+    const res = await registerUser(username, password)
     const body = await res.json()
     const status = res.status
     if (status !== 200)
