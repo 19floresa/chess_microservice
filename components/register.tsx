@@ -33,6 +33,18 @@ function Register()
         {
             console.log("null value found")
         }
+
+        (async () =>
+        {
+            const res = await fetch('http://localhost:3000/api', 
+    { 
+      method: 'POST', 
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username: "alex", password: "12312" })
+    }) 
+    console.log(res)
+        })()
+
         
     }
     return (

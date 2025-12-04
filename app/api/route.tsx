@@ -12,21 +12,21 @@ async function registerUser(username: string, password: string)
     }) 
 }
  
-export async function GET(request: Request) 
+export async function POST(request: Request) 
 {
   try 
   {
-    const resClient = request.json()
+    const resClient = await request.json()
     console.log(resClient)
-    const res = await registerUser(username, password)
-    const body = await res.json()
-    const status = res.status
-    if (status !== 200)
-    {
-      throw new Error(body)
-    }
+    // const res = await registerUser(username, password)
+    // const body = await res.json()
+    // const status = res.status
+    // if (status !== 200)
+    // {
+    //   throw new Error(body)
+    // }
 
-    return NextResponse.json(body, { status: 200 })
+    return NextResponse.json({}, { status: 200 })
   }
   catch(e)
   {
