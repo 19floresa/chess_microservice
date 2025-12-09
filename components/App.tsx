@@ -1,25 +1,7 @@
 "use client"
 import { useState } from 'react'
 import Image from 'next/image'
-
-
-// import king_dark from './assets/king_dark.svg'
-// import queen_dark from "./assets/queen_dark.svg"
-// import rook_dark from "./assets/rook_dark.svg"
-// import pawn_dark from "./assets/pawn_dark.svg"
-// import bishop_dark from "./assets/bishop_dark.svg"
-// import knight_dark from "./assets/knight_dark.svg"
-
-// import king_light from './assets/king_light.svg'
-// import queen_light from "./assets/queen_light.svg"
-// import rook_light from "./assets/rook_light.svg"
-// import pawn_light from "./assets/pawn_light.svg"
-// import bishop_light from "./assets/bishop_light.svg"
-// import knight_light from "./assets/knight_light.svg"
-
-
 import '@/styles/App.css'
-
 import { Chessboard } from "@/engine/chessboard.ts"
 
 interface positionProp 
