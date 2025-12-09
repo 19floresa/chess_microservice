@@ -3,7 +3,7 @@ import Form from 'next/form'
 import { useState, type SetStateAction, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import "@/styles/register.css"
-import register from "@/libApi/registerUser.tsx"
+import register from "@/libApi/userApi"
 
 function DataForm({ name, val, setVal }: { name: string, val: string
                                                          setVal: (value: SetStateAction<string>) => void } )
