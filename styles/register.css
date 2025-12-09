@@ -1,0 +1,13 @@
+.registerWindow {
+    background-color: white;
+    width: 65%;
+    height: 65%;
+}
+
+.inputBox {
+    width: 80%;
+    height: 30%;
+}
+.submitButton {
+    width: 80%;
+}
