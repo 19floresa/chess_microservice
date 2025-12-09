@@ -17,16 +17,16 @@ export async function POST(request: Request)
   try 
   {
     const resClient = await request.json()
-    console.log(resClient)
-    // const res = await registerUser(username, password)
-    // const body = await res.json()
-    // const status = res.status
-    // if (status !== 200)
-    // {
-    //   throw new Error(body)
-    // }
+    const { username, password } = resClient
+    const res = await registerUser(username, password)
+    const body = await res.json()
+    const status = res.status
+    if (status !== 200)
+    {
+      throw new Error(body)
+    }
 
-    return NextResponse.json({}, { status: 200 })
+    return NextResponse.json({ msg: "User was successfully registered,"}, { status: 200 })
   }
   catch(e)
   {

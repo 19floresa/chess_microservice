@@ -1,60 +1,59 @@
 "use client"
 import Form from 'next/form'
-import { useState } from 'react'
+import { useState, type SetStateAction, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import "@/styles/register.css"
-
+import register from "@/libApi/registerUser.tsx"
 
 function DataForm({ name, val, setVal }: { name: string, val: string
-                                                         setVal: (v: React.ChangeEvent<HTMLInputElement>) => void } )
+                                                         setVal: (value: SetStateAction<string>) => void } )
 {
     return(
         <div className='inputBox'>
             <label>
-                {name}: <input name={name} value={val} onChange={setVal}></input>
+                {name}: <input name={name} value={val} onChange={(val: React.ChangeEvent<HTMLInputElement>) => setVal(val.target.value)}></input>
             </label>
         </div>
     )
 }
 
-function Register()
+export default function Register()
 {
     const [ username, setUsername ] = useState("")
     const [ password, setPassword ] = useState("")
 
-    const saveUsername = (u: React.ChangeEvent<HTMLInputElement>) => setUsername(u.target.value)
-    const savePassword = (p: React.ChangeEvent<HTMLInputElement>) => setPassword(p.target.value)
+    const router = useRouter()
 
-    const userRegister = (e: FormData) =>
+    const userRegister = async (e: FormData) =>
     {
-        const u = e.get("username")
-        const p = e.get("password")
+        const u: string = e.get("username") as string
+        const p: string = e.get("password") as string
 
         if (u === "" || p === "")
         {
             console.log("null value found")
+            return
         }
 
-        (async () =>
+        const res = await register(u, p)
+        if (res.status !== 200)
         {
-            const res = await fetch('http://localhost:3000/api', 
-    { 
-      method: 'POST', 
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username: "alex", password: "12312" })
-    }) 
-    console.log(res)
-        })()
-
-        
+            console.log("User was not registered")
+        }
+        else
+        {
+            router.push("/login")
+        }
     }
+
     return (
         <>
         <div className="registerWindow">
             Register a new user
             <hr/>
             <Form action={userRegister}>
-            <DataForm name='username' val={username} setVal={saveUsername}/>
-            <DataForm name='password' val={password} setVal={savePassword}/>
+            <DataForm name='username' val={username} setVal={setUsername}/>
+            <DataForm name='password' val={password} setVal={setPassword}/>
             <div className='submitButton'>
                 <button className='submitButton' type='submit'>Submit</button>
             </div>
@@ -63,5 +62,3 @@ function Register()
         </>
     )
 }
-
-export default Register

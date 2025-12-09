@@ -28,6 +28,8 @@
       "@/styles/*": ["./styles/*"],
       "@/public/*": ["./public/*"],
       "@/engine/*": ["./chess_engine/*"],
+      "@/lib/*": ["./lib/*"],
+      "@/libApi/*": ["./lib/api/*"],
     }
   },
   "include": [
