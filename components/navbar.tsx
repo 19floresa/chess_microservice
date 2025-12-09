@@ -1,36 +1,34 @@
 "use client"
 import { useState } from "react"
+import { usePathname } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
 import "@/styles/navbar.css"
 
 const items: string[][] = [ 
-                            [ "Login",     "https://www.google.com/"],
-                            [ "Register",  "https://www.google.com/"],
-                            [ "Play Vs.",  "https://www.google.com/"],
-                            [ "Play Solo", "https://www.google.com/"], 
+                            [ "Login",     "/login" ],
+                            [ "Register",  "/register" ],
+                            [ "Play Vs.",  "/vs" ],
+                            [ "Play Solo", "/" ], 
+                            [ "Replay",    "/replay" ],
                           ]
 
-function NavbarItem({ name, link, isActive, onClick }: {name: string, link: string, isActive: string, onClick: (name: string)=> void })
+function NavbarItem({ name, link, isActive }: {name: string, link: string, isActive: string})
 {
     return (
-        <li className={isActive} ><a href={link} target="_blank" onClick={() => onClick(name)}>{name}</a></li>
+        <li className={isActive}>
+        <Link href={link}>{name}</Link>
+        </li>
     )
 }
 
 export default function Navbar() 
 {
-    const [ activeName, setActiveName ] = useState("Play Solo")
-
-    function onClick(name: string): void
-    {
-        setActiveName(name)
-    }
-
+    const activeName = usePathname()
     function enableItem(item: string[], idx: number)
     {
-        const isActive: string = (item[0] === activeName) ? "active" : ""
-        return  <NavbarItem key={idx} name={item[0]} link={item[1]} isActive={isActive} onClick={onClick}/>
+        const isActive: string = (item[1] === activeName) ? "active" : ""
+        return  <NavbarItem key={idx} name={item[0]} link={item[1]} isActive={isActive}/>
     }
 
     const navbarLinks = items.map(enableItem)
@@ -41,7 +39,7 @@ export default function Navbar()
         <Image loading="eager" src={"/chess_icon.svg"} alt="Chess Icon" width="100" height="100" className='navbarIcon'/>
     </div>
     <div>
-            <ul>
+        <ul>
             {navbarLinks}
         </ul>
     </div>
