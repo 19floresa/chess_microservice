@@ -2,18 +2,18 @@
 import Form from 'next/form'
 import { useRouter } from 'next/navigation'
 import { useState, type SetStateAction, useEffect } from 'react'
-import { register } from "@/libApi/userApi"
+import { login } from "@/libApi/userApi"
 import DataForm from "@/components/DataForm.tsx"
 import "@/styles/register.css"
 
-export default function Register()
+export default function Login()
 {
     const [ username, setUsername ] = useState("")
     const [ password, setPassword ] = useState("")
 
     const router = useRouter()
 
-    const userRegister = async (e: FormData) =>
+    const userLogin = async (e: FormData) =>
     {
         const u: string = e.get("username") as string
         const p: string = e.get("password") as string
@@ -24,28 +24,28 @@ export default function Register()
             return
         }
 
-        const res = await register(u, p)
+        const res = await login(u, p)
         if (res.status !== 200)
         {
-            console.log("User was not registered")
+            console.log("User was not logged in")
         }
         else
         {
-            console.log("User was registered")
-            router.push("/login")
+            console.log("User was logged in")
+            router.push("/vs")
         }
     }
 
     return (
         <>
         <div className="registerWindow">
-            Register a new user
+            Login
             <hr/>
-            <Form action={userRegister}>
+            <Form action={userLogin}>
             <DataForm name='username' val={username} setVal={setUsername}/>
             <DataForm name='password' val={password} setVal={setPassword}/>
             <div className='submitButton'>
-                <button className='submitButton' type='submit'>Register</button>
+                <button className='submitButton' type='submit'>Login</button>
             </div>
             </Form>
         </div>

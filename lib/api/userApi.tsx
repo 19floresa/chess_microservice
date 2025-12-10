@@ -1,4 +1,4 @@
-export default async function register(username: string, password: string)
+export async function register(username: string, password: string)
 {
     return await fetch('http://localhost:3000/api/register', 
     { 
@@ -6,4 +6,14 @@ export default async function register(username: string, password: string)
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password })
     })
+}
+
+export async function login(username: string, password: string)
+{
+  return await fetch('http://localhost:3000/api/login', 
+  { 
+    method: 'POST', 
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password })
+  })
 }
