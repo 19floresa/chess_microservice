@@ -1,6 +1,7 @@
 'use server'
 
 import { NextResponse, type NextRequest } from 'next/server'
+import { cookies } from 'next/headers'
 
 async function loginUser(username: string, password: string)
 {
@@ -26,7 +27,10 @@ export async function POST(request: Request)
       throw new Error(body)
     }
 
-    return NextResponse.json({ msg: "User was successfully logged in."}, { status: 200 })
+    const cookieStore = await cookies()
+    const { message, id } = body
+    cookieStore.set("id", id)
+    return NextResponse.json({ message }, { status: 200 })
   }
   catch(e)
   {
