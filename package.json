@@ -2,6 +2,7 @@
   "dependencies": {
     "eslint": "^9.39.1",
     "install": "^0.13.0",
+    "jsonwebtoken": "^9.0.3",
     "next": "^16.0.3",
     "npm": "^11.6.4",
     "prettier": "^3.6.2",
