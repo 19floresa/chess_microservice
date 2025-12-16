@@ -3,6 +3,8 @@ export interface gameState {
     idUserDark: number;
     idGame: number;
     gameHistory: [];
+    timeStarted: number;
+    timeCompleted: number;
 }
 
 export const gameSearching: Array<gameState> = []
