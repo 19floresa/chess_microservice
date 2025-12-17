@@ -1,32 +1,13 @@
 import type { Request, Response } from "express"
-import { type gameState, gameSearching, gameActive } from "../models/gameState.ts"
-
-import { generateTimeUTC } from "../../../lib/time/time.ts"
-
-function newGame(id: number): gameState
-{
-  const min = 0x112233445566
-  const max = 0xFFFFFFFFFFFF
-  const idGame = Math.floor( Math.random() * ((max - min) + min) )
-  const timeStarted = generateTimeUTC()
-  const gameInfo: gameState =
-  {
-    idUserLight: id,
-    idUserDark: -1,
-    idGame,
-    gameHistory: [],
-    timeStarted,
-    timeCompleted: -1
-  }
-  return gameInfo
-}
+import { type gameState, gameNew, gameSearchFind, gameSearchAdd, gameActiveFind, gameActiveAdd } from "../models/gameState.ts"
 
 export function gameSearch(req: Request, res: Response): void
 {
     try
     {
       const { id }: string = req.body
-      console.log(newGame(id))
+      const gameInfo = gameNew(id)
+      console.log(gameInfo)
 
       res.send({ message: "Searching for player." })
     }

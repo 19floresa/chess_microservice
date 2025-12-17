@@ -1,5 +1,4 @@
 import { generateTimeUTC } from "../../../lib/time/time.ts"
-import { gameSearch } from "../controllers/gameControllers.ts";
 
 export interface gameState {
     userIdLight: number;
@@ -10,8 +9,8 @@ export interface gameState {
     timeCompleted: number;
 }
 
-export const gameSearching: Array<gameState> = []
-export const gameActive: Record<number, gameState> = {}
+const gameSearching: Array<gameState> = []
+const gameActive: Record<number, gameState> = {}
 
 /**
  * This function generate a game ID between the range specified below: [ min to max ]
@@ -87,4 +86,3 @@ export function gameActiveAdd(game: gameState, userId: number): void
 {
     gameActive[userId] = game
 }
-
