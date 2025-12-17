@@ -22,9 +22,9 @@ class bst
         return new bst(key, value, left, right)
     }
 
-    #find(key: number): bst | null
+    search(key: number): bst | null
     {
-        let current: bst = this
+        let current: bst | null = this
         while (current !== null)
         {
             const currentKey = current.key
@@ -44,9 +44,44 @@ class bst
         return current
     }
 
-        // TODO: Make find parent
-    add(key: number, value: any)
+    #findParent(key: number): bst | null | undefined
+    {
+        let parent: bst | null = null
+        let current: bst | null = this
+        if (key === current.key)
+        {
+            return undefined
+        }
+
+        while (current !== null)
+        {
+            const currentKey = current.key
+            if (current === null || key === currentKey)
+            {
+                break
+            }
+            else if (key <= currentKey)
+            {
+                parent = current
+                current = current.left
+            }
+            else
+            {
+                parent = current
+                current = current.right
+            }
+        }
+        return parent
+    }
+
+    add(key: number, value: any): boolean
     {
         const nodeNew = this.#create(key, value)
+        return false
+    }
+
+    delete(): boolean
+    {
+        return false
     }
 }
