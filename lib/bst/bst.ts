@@ -44,37 +44,6 @@ export class bst
         return current
     }
 
-    #findParent(key: number): bst
-    {
-        let parent: bst | null = null
-        let current: bst | null = this
-        if (key === current.getKey())
-        {
-            return current // Root case
-        }
-
-        while (current !== null)
-        {
-            const currentKey = current.getKey()
-            if (key === currentKey)
-            {
-                parent = null
-                break
-            }
-            else if (key <= currentKey)
-            {
-                parent = current
-                current = current.getLeft()
-            }
-            else
-            {
-                parent = current
-                current = current.getRight()
-            }
-        }
-        return parent
-    }
-
     add(key: number, value: any): boolean
     {
         const nodeParent = this.#findParent(key)
@@ -96,6 +65,11 @@ export class bst
         return false
     }
 
+    delete(key: number): boolean
+    {
+        return false
+    }
+
     inorderTraversal(node: bst = this)
     {
         if (node !== null)
@@ -105,12 +79,6 @@ export class bst
             this.inorderTraversal(node.getRight())
         }
     }
-
-    delete(key: number): boolean
-    {
-        return false
-    }
-
 
     getKey()
     {
@@ -140,6 +108,37 @@ export class bst
     setRight(node: bst)
     {
         this.#right = node
+    }
+
+    #findParent(key: number): bst
+    {
+        let parent: bst | null = null
+        let current: bst | null = this
+        if (key === current.getKey())
+        {
+            return current // Root case
+        }
+
+        while (current !== null)
+        {
+            const currentKey = current.getKey()
+            if (key === currentKey)
+            {
+                parent = null
+                break
+            }
+            else if (key <= currentKey)
+            {
+                parent = current
+                current = current.getLeft()
+            }
+            else
+            {
+                parent = current
+                current = current.getRight()
+            }
+        }
+        return parent
     }
 }
 
