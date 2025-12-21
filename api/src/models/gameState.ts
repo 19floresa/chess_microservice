@@ -12,6 +12,7 @@ export interface gameState {
 
 const gameSearching: Array<gameState> = []
 const gameActive: Record<number, gameState> = {}
+const gamesAll: Record<number, gameState> = {}
 
 /**
  * This function generate a game ID between the range specified below: [ min to max ]
@@ -32,7 +33,7 @@ function gameGenerateId(): number
   }
 }
 
-export function gameNew(userIdLight: number)
+export function gameNew(userIdLight: number): gameState
 {
   const gameId = gameGenerateId()
   const timeStarted = generateTimeUTC()
@@ -68,7 +69,7 @@ export function gameSearchFind(gameId: number): gameState | null
 
 export function gameSearchAdd(game: gameState): void
 {
-    gameSearching.push(game)
+  gameSearching.push(game)
 }
 
 // export function gameActiveRemove(gameId: number): boolean
@@ -86,6 +87,17 @@ export function gameActiveFind(userId: number): gameState | null
 export function gameActiveAdd(game: gameState, userId: number): void
 {
     gameActive[userId] = game
+}
+
+export function gameAllAdd(game: gameState): void
+{
+  const gameId = game.gameId
+  gamesAll[gameId] = game
+}
+
+export function gameAllFind(gameId: number): gameState | undefined
+{
+  return gamesAll[gameId]
 }
 
 // let root: bst = new bst(7, null)

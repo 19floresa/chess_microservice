@@ -5,8 +5,8 @@ export function gameSearch(req: Request, res: Response): void
 {
     try
     {
-      const { id }: string = req.body
-      const gameInfo = gameNew(id)
+      const { id }: { id: string } = req.body
+      const gameInfo: gameState = gameNew(id)
       console.log(gameInfo)
 
       res.send({ message: "Searching for player." })
