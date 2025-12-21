@@ -1,4 +1,5 @@
 import { generateTimeUTC } from "../../../lib/time/time.ts"
+//import { bst } from "../../../lib/bst/bst.ts"
 
 export interface gameState {
     userIdLight: number;
@@ -86,3 +87,22 @@ export function gameActiveAdd(game: gameState, userId: number): void
 {
     gameActive[userId] = game
 }
+
+// let root: bst = new bst(7, null)
+// root.add(2, null)
+// root.add(3, null)
+// root.add(9, null)
+// root.add(8, null)
+// root.add(10, null)
+// console.log(root.inorderTraversal())
+// Delete all
+// root = root.delete(10)
+// root = root.delete(8)
+// root = root.delete(9)
+// root = root.delete(3)
+// root = root.delete(2)
+// Delete root
+// root = root.delete(7)
+// console.log(root.inorderTraversal())
+// root = root.delete(8)
+//console.log(root.inorderTraversal())
