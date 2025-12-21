@@ -1,13 +1,13 @@
 
-export class bst
+class node
 {
-    #left: bst | null
-    #right: bst | null
+    #left: node | null
+    #right: node | null
     #key: number
     #value: any
 
-    constructor(key: number, value: any, left: bst | null = null, 
-                                         right: bst | null = null)
+    constructor(key: number, value: any, left: node | null = null, 
+                                         right: node | null = null)
     {
         this.#left = null
         this.#right = null
@@ -15,13 +15,13 @@ export class bst
         this.#value = value
     }
 
-    #create(key: number, value: any, left: bst | null = null, 
-                                     right: bst | null = null)
+    #create(key: number, value: any, left: node | null = null, 
+                                     right: node | null = null)
     {
-        return new bst(key, value, left, right)
+        return new node(key, value, left, right)
     }
 
-    search(key: number): bst | null
+    search(key: number): node | null
     {
         const { child } = this.#findNode(key)
         return child
@@ -40,22 +40,54 @@ export class bst
         return false
     }
 
-    delete(key: number): bst
+    delete(key: number): node
     {
-        let newRoot: bst = this
+        let newRoot: node = this
         // Find node to remove
         const { parent, child } = this.#findNode(key)
         if (parent === null && child !== null)
         {
-           // const { successor } = this.#extractSuccessor(child)
+            const { successor } = child.#extractSuccessor()   
+            console.log(`current: ${successor.getKey()}`)
+            if (successor !== null)
+            {
+                const successorKey = successor.getKey()
+                const childLeft = child.getLeft()
+                const childRight = child.getRight()
+                if (successorKey !== childLeft.getKey())
+                {
+                    console.log(`left: ${childLeft.getKey()}`)
+                    successor.setLeft(childLeft)
+                }
+                
+                if (successorKey !== childRight.getKey())
+                {
+                    console.log(`right: ${childRight.getKey()}`)
+                    successor.setRight(childRight)
+                }
+            }
+
+            newRoot = successor
+
+            // Delete Child: Implicitily remove child since node tree wont have access to it anymore
         }
         else if (parent !== null && child !== null)
         {
             const { successor } = child.#extractSuccessor()
             if (successor !== null)
             {
-                successor.setLeft(child.getLeft())
-                successor.setRight(child.getRight())
+                const successorKey = successor.getKey()
+                const childLeft = child.getLeft()
+                const childRight = child.getRight()
+                if (successorKey !== childLeft.getKey())
+                {
+                    successor.setLeft(child.getLeft())
+                }
+                
+                if (successorKey !== childRight.getKey())
+                {
+                    successor.setRight(child.getRight())
+                }
             }
 
             if ((child.getKey() - parent.getKey()) <= 0)
@@ -67,12 +99,12 @@ export class bst
                 parent.setRight(successor)
             }
 
-            // Delete Child: Implicitily remove child since bst tree wont have access to it anymore
+            // Delete Child: Implicitily remove child since node tree wont have access to it anymore
         }
         return newRoot
     }
 
-    inorderTraversal(node: bst = this): number[]
+    inorderTraversal(node: node = this): number[]
     {
         if (node !== null)
         {
@@ -104,12 +136,12 @@ export class bst
         return this.#right
     }
 
-    setLeft(node: bst)
+    setLeft(node: node)
     {
         this.#left = node
     }
 
-    setRight(node: bst)
+    setRight(node: node)
     {
         this.#right = node
     }
@@ -123,11 +155,11 @@ export class bst
      * @param key  Node to find
      * @returns  Data of the last comparison
      */
-    #findNode(key: number): { parent: bst, child: bst }
+    #findNode(key: number): { parent: node, child: node }
     {
         // Find parent node of child with correct key
-        let parent: bst = null
-        let current: bst = this
+        let parent: node = null
+        let current: node = this
         while (current !== null)
         {
             const comparison = key - current.getKey()
@@ -145,26 +177,34 @@ export class bst
         return { parent, child: current }
     }
 
-    #extractSuccessor(): { successor: bst }
+    #extractSuccessor(): { successor: node }
     {
-        let successor: bst = this.getRight()
-        let successorParent: bst = this
-        let successorTemporary: bst = null
+        let successor: node = this.getRight()
+        let successorParent: node = this
+        let successorTemporary: node = null
         if (successor !== null)
         {
             // Find smallest number larger then removed node
             successorTemporary = successor.getLeft()
+            let flag = true
             while (successorTemporary !== null)
             {
+                flag = false
                 successorParent = successor
                 successor = successorTemporary
                 successorTemporary = successorTemporary.getLeft()
             }
 
             // Successor: Move right child of successor up
-            successorParent.setLeft(successor.getRight())
-            // // Removed Node: Reinsert left child to successor
-            // successor.setLeft(this.getLeft())
+            const childOld = successor.getRight()
+            if (flag)
+            {
+                successorParent.setRight(childOld)
+            }
+            else
+            {
+                successorParent.setLeft(childOld)
+            }
         }
         else 
         {
@@ -173,17 +213,25 @@ export class bst
             if (successor !== null)
             {
                 successorTemporary = successor.getRight()
+                let flag = true
                 while (successorTemporary !== null)
                 {
+                    flag = false
                     successorParent = successor
                     successor = successorTemporary
                     successorTemporary = successorTemporary.getRight()
                 }
 
                 // Successor: Move left child of successor up
-                successorParent.setRight(successor.getLeft())
-                // // Removed Node: Reinsert right child to successor
-                // successor.setRight(this.getRight())
+                const childOld = successor.getLeft()
+                if (flag)
+                {
+                    successorParent.setLeft(childOld)
+                }
+                else
+                {
+                    successorParent.setRight(childOld)
+                }
             }
         }
 
@@ -197,3 +245,64 @@ export class bst
     }
 }
 
+export class bst
+{
+    #root: node
+    constructor(key: number, value: any, left: node | null = null, 
+                                         right: node | null = null)
+    {
+        const newRoot = new node(key, value, left, right)
+        this.setRoot(newRoot)
+    }
+
+    add(key: number, value: any): boolean
+    {
+        const root = this.getRoot()
+        if (root != null)
+        {
+            return root.add(key, value)
+        }
+        return false
+    }
+
+    search(key: number): node
+    {
+        const root = this.getRoot()
+        if (root != null)
+        {
+            return root.search(key)
+        }
+        return null
+    }
+
+    delete(key: number): boolean
+    {
+        const root = this.getRoot()
+        if (root != null)
+        {
+            const newRoot = root.delete(key)
+            this.setRoot(newRoot)
+            return true
+        }
+        return false
+    }
+
+    getRoot(): node
+    {
+        return this.#root
+    }
+
+    setRoot(node: node): void
+    {
+        this.#root = node
+    }
+
+    inorderTraversal()
+    {
+        const root = this.getRoot()
+        if (root != null)
+        {
+           return root.inorderTraversal()
+        }
+    }
+}
