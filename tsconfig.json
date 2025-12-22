@@ -27,7 +27,7 @@
       "@/components/*": ["./components/*"],
       "@/styles/*": ["./styles/*"],
       "@/public/*": ["./public/*"],
-      "@/engine/*": ["./chess_engine/*"],
+      "@/engine/*": ["./lib/chess_engine/*"],
       "@/lib/*": ["./lib/*"],
       "@/libApi/*": ["./lib/api/*"],
     }
