@@ -4,7 +4,6 @@ import Image from 'next/image'
 import '@/styles/App.css'
 import { Chessboard } from "@/engine/chessboard.ts"
 import GameStatus from "@/components/gameStatus.tsx"
-import "@/styles/layout.css"
 
 interface positionProp 
 {

@@ -33,12 +33,3 @@ html, body {
     align-items: center;
 
 }
-
-.infoBox {
-    /* background-color: green; */
-    width: 30vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
