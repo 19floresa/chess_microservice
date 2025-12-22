@@ -1,6 +1,5 @@
 import { React } from "next/dist/server/route-modules/app-page/vendored/rsc/entrypoints";
 import Navbar from "@/components/navbar.tsx"
-import GameStatus from "@/components/gameStatus.tsx"
 import "@/styles/layout.css"
 
 export default function Rootlayout({ children} = { children: React.ReactNode })
@@ -14,9 +13,6 @@ export default function Rootlayout({ children} = { children: React.ReactNode })
                     </div>
                     <div className="gameBox">
                         {children}
-                    </div>
-                    <div className="infoBox">
-                        <GameStatus/>
                     </div>
                 </div>
             </body>

@@ -1,6 +1,6 @@
 export async function register(username: string, password: string)
 {
-    return await fetch('http://localhost:3000/api/register', 
+    return await fetch('http://localhost:3025/user/register', 
     { 
       method: 'POST', 
       headers: { "Content-Type": "application/json" },
@@ -10,7 +10,7 @@ export async function register(username: string, password: string)
 
 export async function login(username: string, password: string)
 {
-  return await fetch('http://localhost:3000/api/login', 
+  return await fetch('http://localhost:3025/user/login', 
   { 
     method: 'POST', 
     headers: { "Content-Type": "application/json" },
