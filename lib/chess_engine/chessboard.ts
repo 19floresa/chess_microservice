@@ -91,7 +91,7 @@ export class Chessboard
         return this.#gameBoard[yPos][xPos]
     }
 
-    #setPiece(piece: Chesspiece, newX: number, newY: number): void
+    setPiece(piece: Chesspiece, newX: number, newY: number): void
     {
         const [ oldX, oldY ] = piece.getCurrentPosition()
         piece.setNewPosition(newX, newY)
@@ -99,63 +99,6 @@ export class Chessboard
         this.#gameBoard[newY][newX] = piece
     }
 
-    #checkNewSquare(playerColor: string, newX: number, newY: number)
-    {
-        const piece: Chesspiece = this.#getPiece(newX, newY)
-        // TODO: Check that king wont be put in check
-        return ((piece === null) || (piece.getColor() !== playerColor))
-    }
-
-    #checkSquaresJumped(piece: Chesspiece, newX: number, newY: number): boolean
-    {
-        return piece.checkJumpedSquares(this.#gameBoard, newX, newY)
-    }
-
-    move({ oldX, oldY, 
-           newX, newY }: { oldX: number, oldY: number, 
-                           newX: number, newY: number }): boolean
-    {
-        if (!this.isWithinValidRange(newX, newY)) return false
-        if (!this.isWithinValidRange(oldX, oldY)) return false
-
-        const piece: Chesspiece = this.#getPiece(oldX, oldY)
-        const playerColor: string = this.getCurrentState()
-       
-        if (piece === null)                                 return false // ignore empty squares
-        if (playerColor !== piece.getColor())               return false // Cant move pieces from other player
-        if (!piece.move(newX, newY))                        return false // ignore invalid moves
-        if (!this.#checkNewSquare(playerColor, newX, newY)) return false // Dont move to square of our pieces
-        if (!this.#checkSquaresJumped(piece, newX, newY))   return false // Check all squares jumped over are empty
-
-        const oldPiece: Chesspiece = this.#getPiece(newX, newY)
-        if (oldPiece !== null) // remove piece from player
-        {
-            const otherPlayerColor: string = (playerColor === "dark") ?  "light" : "dark"
-            const otherPlayer: Player =  this.#getPlayer(otherPlayerColor)
-            otherPlayer.removePiece(oldPiece)
-            console.log(`Removed: ${oldPiece.getName()}`)
-        }
-
-        this.#setPiece(piece, newX, newY)
-        this.changePlayer()
-
-        const [ targetName, targetColor] = piece.getName().split("_")
-        if ((targetName === "pawn"))
-        {
-            if ((targetColor === "dark") && (newY === 7))   
-            {
-                this.#promote(newX, newY)
-            }
-            else if ((targetColor === "light") && (newY === 0))
-            {
-                this.#promote(newX, newY)
-            }
-        } 
-        
-        // TODO: win condition
-        // TODO: stalement
-        return true
-    }
 
     #promote(x: number, y: number)
     {
