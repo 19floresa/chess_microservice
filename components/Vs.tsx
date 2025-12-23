@@ -4,6 +4,8 @@ import Image from 'next/image'
 import '@/styles/App.css'
 import { Chessboard } from "@/engine/chessboard.ts"
 import GameStatus from "@/components/gameStatus.tsx"
+import type { Socket } from "socket.io-client"
+
 
 interface positionProp 
 {
@@ -58,7 +60,7 @@ function ChessRow({ y, handleBoard, handleClick }: { y: number,
   )
 }
 
-function VS() 
+function Vs({ socket }: { socket: Socket }) 
 {
   const [ chessboard, setChessboard ] = useState(new Chessboard())
   const [ firstPick, setFirstPick ] = useState([ -1, -1 ])
@@ -72,6 +74,8 @@ function VS()
   {
     const player:     string = chessboard.getCurrentState()
     const pieceColor: string = chessboard.getPieceColor(x, y)
+
+    //socket.emit("move", { x, y }, (err, response) => console.log("nothing"))
     
     const [ xPos, yPos ] = firstPick
     if ((xPos === -1) && (yPos === -1)) // pick first piece
@@ -107,4 +111,4 @@ function VS()
   )
 }
 
-export default App
+export default Vs
