@@ -74,8 +74,6 @@ function Vs({ socket }: { socket: Socket })
   {
     const player:     string = chessboard.getCurrentState()
     const pieceColor: string = chessboard.getPieceColor(x, y)
-
-    //socket.emit("move", { x, y }, (err, response) => console.log("nothing"))
     
     const [ xPos, yPos ] = firstPick
     if ((xPos === -1) && (yPos === -1)) // pick first piece
@@ -85,16 +83,30 @@ function Vs({ socket }: { socket: Socket })
         const newFirstPick = [ x, y ]
         setFirstPick(newFirstPick)
       }
-      return
     }
-    
-    // choose where to move piece
-    const didPieceMove = chessboard.move({ oldX: xPos, oldY: yPos, 
-                                           newX: x, newY: y })
-
-    const newFirstPick = [ -1, -1 ]
-    setFirstPick(newFirstPick)
-    setChessboard(chessboard)
+    else
+    {
+        socket.timeout(5000).emit("move", { oldX: xPos, oldY: yPos, newX: x, newY: y }, (err, resp) => 
+            {
+                if (err)
+                {
+                    console.log("Could not move")
+                }
+                else
+                {
+                    if (resp.status === "ok")
+                    {
+                        // choose where to move piece
+                        chessboard.move({ oldX: xPos, oldY: yPos, newX: x, newY: y })
+                        console.log(`Player moving: (${xPos}, ${yPos}) to (${x}, ${y}).`)
+                        setChessboard(chessboard)
+                    }
+                }
+                
+                const newFirstPick = [ -1, -1 ]
+                setFirstPick(newFirstPick)
+            })
+    }
   }
 
   const rows = [ 0, 1, 2, 3, 4, 5, 6 , 7 ]

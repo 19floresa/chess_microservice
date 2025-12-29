@@ -99,6 +99,18 @@ export class Chessboard
         this.#gameBoard[newY][newX] = piece
     }
 
+    move({ oldX, oldY, newX, newY }: { oldX: number, oldY: number, newX: number, newY: number}): boolean
+    {
+        const piece: Chesspiece = this.#getPiece(oldX, oldY)
+        if (piece !== null)
+        {
+            this.setPiece(piece, newX, newY)
+            this.changePlayer()
+            return true
+        }
+        return false
+    }
+
 
     #promote(x: number, y: number)
     {

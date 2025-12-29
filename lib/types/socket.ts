@@ -5,8 +5,7 @@ export interface ServerToClientEvents {
 }
 
 export interface ClientToServerEvents {
-  move: ({ x, y }: { x: number, y: number }, callback: any) => void;
-}
+move: ({ x, y, newX, newY }: { x: number, y: number, newX: number, newY: number }, callback: any) => void}
 
 export interface InterServerEvents {
   ping: () => void;

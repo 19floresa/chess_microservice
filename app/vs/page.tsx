@@ -32,12 +32,6 @@ export default function Page()
         })
     }, [])
 
-
-    // if (isConnected)
-    // {
-    //     socket.emit("move", { x: 3, y: 2 }, (err, response) => console.log("nothing"))
-    // }
-
     return (
     <>
         <Vs socket={socket}/>
