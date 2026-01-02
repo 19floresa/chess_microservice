@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "cookies-next": "^6.1.1",
     "eslint": "^9.39.1",
     "install": "^0.13.0",
     "jsonwebtoken": "^9.0.3",
@@ -22,6 +23,7 @@
     "@types/node": "^24.10.1",
     "@types/react": "19.2.6",
     "baseline-browser-mapping": "^2.9.11",
+    "jest": "^30.2.0",
     "typescript": "^5.9.3"
   }
 }
