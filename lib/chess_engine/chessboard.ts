@@ -26,6 +26,44 @@ export class Chessboard
         this.#setPiece("", x, y)
         return true
     }
+
+    askPlayerToPromotePawn(x: number, y: number): number
+    {
+        let val: string = ""
+        let n: number = -1
+        while(true)
+        {
+            val = prompt("Promote Pawn: Queen (1), Rook (2), Bishop (3), Knight (4):")
+            n = Number(val)
+            if ((n > 0) && (n < 5)) break
+        }
+
+        return n
+    }
+
+    promote(x: number, y: number, value: number): void
+    {
+        const color: string = this.getPieceColor(x, y)
+        let newPiece: string = ""
+        switch(value)
+        {
+            case 1:
+                newPiece = `queen_${color}`
+                break
+            case 2:
+                newPiece = `rook_${color}`
+                break
+            case 3:
+                newPiece = `bishop_${color}`
+                break
+            case 4:
+                newPiece = `knight_${color}`
+                break
+            default:
+                throw Error(`Pawn pronotion is not valid: ${value}`)
+        }
+        this.#setPiece(newPiece, x, y)
+    }
     
     isWithinValidRange(newX: number, newY: number): boolean 
     {
@@ -83,42 +121,4 @@ export class Chessboard
             }
         }
     }
-
-    // #promote(x: number, y: number)
-    // {
-    //     const piece: Chesspiece = this.#getPiece(x, y)
-    //     const color: string = piece.getColor()
-    //     let val: string = ""
-    //     let n: number = -1
-    //     while(true)
-    //     {
-    //         val = prompt("Promote Pawn: Queen (1), Rook (2), Bishop (3), Knight (4):")
-    //         n = Number(val)
-    //         if ((n > 0) && (n < 5)) break
-    //     }
-
-    //     let newPiece: Chesspiece = null
-    //     switch(n)
-    //     {
-    //         case 1:
-    //             newPiece = new Queen(x, y, color)
-    //             break
-    //         case 2:
-    //             newPiece = new Rook(x, y, color)
-    //             break
-    //         case 3:
-    //             newPiece = new Bishop(x, y, color)
-    //             break
-    //         case 4:
-    //             newPiece = new Knight(x, y, color)
-    //             break
-    //         default:
-    //             throw Error(`Pawn pronotion is not valid. ${n}`)
-    //     }
-
-    //     const player: Player = this.#getPlayer(color)
-    //     player.removePiece(piece)
-    //     player.addPiece(newPiece)
-    //     this.#gameBoard[y][x] = newPiece
-    // }
 }
