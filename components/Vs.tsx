@@ -60,7 +60,7 @@ function ChessRow({ y, handleBoard, handleClick }: { y: number,
   )
 }
 
-function Vs({ socket }: { socket: Socket }) 
+function Vs({ socket, isConnected, startGame, player }: { socket: Socket, isConnected: boolean, startGame: boolean, player: string }) 
 {
   const [ chessboard, setChessboard ] = useState(new Chessboard())
   const [ firstPick, setFirstPick ] = useState([ -1, -1 ])
@@ -70,15 +70,22 @@ function Vs({ socket }: { socket: Socket })
     return chessboard.getPieceName(x, y)
   }
 
-  function handleClick({x, y}: positionProp): void
+  function handleClick({ x, y }: positionProp): void
   {
-    const player:     string = chessboard.getCurrentState()
+    if (!isConnected || !startGame || !player)
+    {
+        setFirstPick([ -1, -1 ])
+        console.log(`Connected: ${isConnected}, Game Start: ${startGame}, Player: ${player}`)
+        return
+    }
+
+    const currentPlayer:     string = chessboard.getCurrentState()
     const pieceColor: string = chessboard.getPieceColor(x, y)
     
     const [ xPos, yPos ] = firstPick
     if ((xPos === -1) && (yPos === -1)) // pick first piece
     {
-      if ((pieceColor !== "") && (pieceColor === player))
+      if ((currentPlayer && player) && (pieceColor !== "") && (pieceColor === player))
       {
         const newFirstPick = [ x, y ]
         setFirstPick(newFirstPick)
@@ -90,7 +97,7 @@ function Vs({ socket }: { socket: Socket })
             {
                 if (err)
                 {
-                    console.log("Could not move")
+                    console.log("Try again. Server did not acknowledge move.")
                 }
                 else
                 {
