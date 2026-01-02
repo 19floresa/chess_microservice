@@ -5,6 +5,7 @@ import '@/styles/App.css'
 import { Chessboard } from "@/engine/chessboard.ts"
 import GameStatus from "@/components/gameStatus.tsx"
 import type { Socket } from "socket.io-client"
+import { useRouter } from 'next/navigation';
 
 
 interface positionProp 
@@ -62,72 +63,79 @@ function ChessRow({ y, handleBoard, handleClick }: { y: number,
 
 function Vs({ socket, isConnected, startGame, player }: { socket: Socket, isConnected: boolean, startGame: boolean, player: string }) 
 {
-  const [ chessboard, setChessboard ] = useState(new Chessboard())
-  const [ firstPick, setFirstPick ] = useState([ -1, -1 ])
+    const [ chessboard, setChessboard ] = useState(new Chessboard())
+    const [ firstPick, setFirstPick ] = useState([ -1, -1 ])
 
-  function handleBoard({ x, y }: positionProp): string
-  {
-    return chessboard.getPieceName(x, y)
-  }
-
-  function handleClick({ x, y }: positionProp): void
-  {
-    if (!isConnected || !startGame || !player)
+    const router = useRouter()
+    socket.on("validMoveOpponent", ({ x, y, x2, y2 }) =>
     {
-        setFirstPick([ -1, -1 ])
-        console.log(`Connected: ${isConnected}, Game Start: ${startGame}, Player: ${player}`)
-        return
+        console.log(`Opponent moving: (${x}, ${y}) to (${x2}, ${y2}).`)
+        chessboard.move({ x, y, x2, y2 })
+        setChessboard(chessboard)
+        router.refresh()
+    })
+
+    function handleBoard({ x, y }: positionProp): string
+    {
+        return chessboard.getPieceName(x, y)
     }
 
-    const currentPlayer:     string = chessboard.getCurrentState()
-    const pieceColor: string = chessboard.getPieceColor(x, y)
-    
-    const [ xPos, yPos ] = firstPick
-    if ((xPos === -1) && (yPos === -1)) // pick first piece
+    function handleClick({ x, y }: positionProp): void
     {
-      if ((currentPlayer && player) && (pieceColor !== "") && (pieceColor === player))
-      {
-        const newFirstPick = [ x, y ]
-        setFirstPick(newFirstPick)
-      }
-    }
-    else
-    {
-        socket.timeout(5000).emit("move", { oldX: xPos, oldY: yPos, newX: x, newY: y }, (err, resp) => 
-            {
-                if (err)
+        if (!isConnected || !startGame || !player)
+        {
+            setFirstPick([ -1, -1 ])
+            return
+        }
+
+        //const currentPlayer:     string = chessboard.getCurrentState()
+        const pieceColor: string = chessboard.getPieceColor(x, y)
+        
+        const [ xPos, yPos ] = firstPick
+        if ((xPos === -1) && (yPos === -1)) // pick first piece
+        {
+        if (/*(currentPlayer && player) && */(pieceColor !== "") && (pieceColor === player))
+        {
+            const newFirstPick = [ x, y ]
+            setFirstPick(newFirstPick)
+        }
+        }
+        else
+        {
+            socket.timeout(5000).emit("move", { x: xPos, y: yPos, x2: x, y2: y }, (err, resp) => 
                 {
-                    console.log("Try again. Server did not acknowledge move.")
-                }
-                else
-                {
-                    if (resp.status === "ok")
+                    if (err)
                     {
-                        // choose where to move piece
-                        chessboard.move({ oldX: xPos, oldY: yPos, newX: x, newY: y })
-                        console.log(`Player moving: (${xPos}, ${yPos}) to (${x}, ${y}).`)
-                        setChessboard(chessboard)
+                        console.log("Try again. Server did not acknowledge move.")
                     }
-                }
-                
-                const newFirstPick = [ -1, -1 ]
-                setFirstPick(newFirstPick)
-            })
+                    else
+                    {
+                        if (resp.status === "ok")
+                        {
+                            // choose where to move piece
+                            console.log(`Player moving: (${xPos}, ${yPos}) to (${x}, ${y}).`)
+                            chessboard.move({ x: xPos, y: yPos, x2: x, y2: y })
+                            setChessboard(chessboard)
+                        }
+                    }
+                    
+                    setFirstPick([ -1, -1 ])
+                })
+        }
     }
-  }
 
-  const rows = [ 0, 1, 2, 3, 4, 5, 6 , 7 ]
-  const chessRows = rows.map((idx, key) => <ChessRow key={key} y={idx} handleBoard={handleBoard} handleClick={handleClick}/>)
-  return (
-    <>
-      <div>
-        {chessRows}
-      </div>
-      <div className="infoBox">
-          <GameStatus/>
-      </div>
-    </>
-  )
+    const rows = [ 0, 1, 2, 3, 4, 5, 6 , 7 ]
+    const chessRows = rows.map((idx, key) => <ChessRow key={key} y={idx} handleBoard={handleBoard} handleClick={handleClick}/>)
+    return (
+        <>
+        <div>
+            {chessRows}
+        </div>
+        <div className="infoBox">
+            <GameStatus/>
+        </div>
+        </>
+    )
 }
 
 export default Vs

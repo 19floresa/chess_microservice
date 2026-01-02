@@ -36,6 +36,17 @@ export class Chessboard
         return (xValid && yValid)
     }
 
+    isPawnPromote(x: number, y: number): boolean
+    {
+        const piece: string = this.getPieceName(x, y)
+        const [ name, color ] = piece.split("_")
+        if (name !== "pawn")
+        {
+            return ((color === "dark" && y ===  7) || (color === "light" && y === 0))
+        }
+        return false
+    }
+
     getPieceName(xPos: number, yPos: number): string
     {
         if (!this.isWithinValidRange(xPos, yPos)) return ""
@@ -59,6 +70,18 @@ export class Chessboard
     #setPiece(piece: string, x: number, y: number): void
     {
         this.#gameBoard[y][x] = piece
+    }
+
+    setBoard(newBoard: string[][]): void
+    {
+        for (let i = 0 ; i < 8; i++)
+        {
+            for (let j = 0; j < 8; j++)
+            {
+                const piece: string = newBoard[j][i]
+                this.#setPiece(piece, i, j)
+            }
+        }
     }
 
     // #promote(x: number, y: number)
