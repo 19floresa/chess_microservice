@@ -6,10 +6,10 @@ import Link from "next/link"
 import "@/styles/navbar.css"
 
 const items: string[][] = [ 
+                            [ "Home",     "/" ], 
                             [ "Login",    "/login" ],
                             [ "Register", "/register" ],
                             [ "Play Vs.", "/vs" ],
-                            [ "Home",     "/" ], 
                             [ "Replay",   "/replay" ],
                           ]
 
