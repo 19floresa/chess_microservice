@@ -6,7 +6,5 @@ export default async function searchGame(id: number)
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id })
     })
-
-    const body = await res.json()
-    return body
+    return await res.json()
 }

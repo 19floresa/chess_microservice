@@ -1,11 +1,16 @@
 "use client"
-import { useState } from 'react'
+//import { useState } from 'react'
 import Image from 'next/image'
 import '@/styles/App.css'
 import { Chessboard } from "@/engine/chessboard.ts"
 import GameStatus from "@/components/gameStatus.tsx"
-import type { Socket } from "socket.io-client"
+//import type { Socket } from "socket.io-client"
+
 import { useRouter } from 'next/navigation';
+import { socket } from "@/socket"
+import { useEffect, useState } from "react"
+import searchGame from "@/libApi/searchGameApi"
+import { getCookie } from "cookies-next"
 
 
 interface positionProp 
@@ -61,19 +66,78 @@ function ChessRow({ y, handleBoard, handleClick }: { y: number,
   )
 }
 
-function Vs({ socket, isConnected, startGame, player }: { socket: Socket, isConnected: boolean, startGame: boolean, player: string }) 
+function Vs() 
 {
     const [ chessboard, setChessboard ] = useState(new Chessboard())
     const [ firstPick, setFirstPick ] = useState([ -1, -1 ])
 
+    const [ isConnected, setIsConnected] = useState(socket.connected)
+    const [ startGame, setStartGame ] = useState(false)
+    const [ color, setColor ] = useState("")
+
     const router = useRouter()
-    socket.on("validMoveOpponent", ({ x, y, x2, y2 }) =>
+    useEffect(() => 
     {
-        console.log(`Opponent moving: (${x}, ${y}) to (${x2}, ${y2}).`)
-        chessboard.move({ x, y, x2, y2 })
-        setChessboard(chessboard)
-        router.refresh()
-    })
+        async function onConnect()
+        {
+            console.log("Player connected.")
+            const userId: number = parseInt(await getCookie("id", { domain: "http://localhost:3000" }))
+            const body = await searchGame(userId)
+            const gameId: number = body.gameId ?? -1
+            console.log(gameId)
+            socket.timeout(5000).emit("connectPlayer", { userId, gameId }, (err, resp) => 
+            {
+                if (err)
+                {
+                    console.log("Failed to connect to the game.")
+                }
+                else
+                {             
+                    console.log(resp)                          
+                    if (resp.status === "ok")
+                    {
+                        const { color } = resp
+                        setColor(color)
+                        setIsConnected(true)
+                    }
+                }
+            })
+        }
+        
+        function onValidMoveOpponent({ x, y, x2, y2 })
+        {
+            console.log(`Opponent moving: (${x}, ${y}) to (${x2}, ${y2}).`)
+            chessboard.move({ x, y, x2, y2 })
+            setChessboard(chessboard)
+            router.refresh()
+        }
+
+        function onDisconnect()
+        {
+            console.log("Player disconnected.")
+            setIsConnected(false)
+        }
+
+        function onStartGame()
+        {
+            console.log("Start game")
+            setStartGame(true)
+        }
+
+        socket.on("connect", onConnect)
+        socket.on("disconnect", onDisconnect)
+        socket.on("startGame", onStartGame)
+        socket.on("validMoveOpponent", onValidMoveOpponent)
+
+        return (
+        () =>
+        {
+            socket.off("connect", onConnect)
+            socket.off("disconnect", onDisconnect)
+            socket.off("startGame", onStartGame)
+            socket.off("validMoveOpponent", onValidMoveOpponent)
+        })
+    }, [])
 
     function handleBoard({ x, y }: positionProp): string
     {
@@ -82,8 +146,9 @@ function Vs({ socket, isConnected, startGame, player }: { socket: Socket, isConn
 
     function handleClick({ x, y }: positionProp): void
     {
-        if (!isConnected || !startGame || !player)
+        if (!isConnected || !startGame || !color)
         {
+            console.log(`Connected: ${isConnected}, Start Game: ${startGame}, Player: ${color}`)
             setFirstPick([ -1, -1 ])
             return
         }
@@ -94,7 +159,7 @@ function Vs({ socket, isConnected, startGame, player }: { socket: Socket, isConn
         const [ xPos, yPos ] = firstPick
         if ((xPos === -1) && (yPos === -1)) // pick first piece
         {
-        if (/*(currentPlayer && player) && */(pieceColor !== "") && (pieceColor === player))
+        if (/*(currentPlayer && player) && */(pieceColor !== "") && (pieceColor === color))
         {
             const newFirstPick = [ x, y ]
             setFirstPick(newFirstPick)
