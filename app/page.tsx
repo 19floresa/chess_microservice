@@ -1,6 +1,6 @@
-import App from "@/components/App.tsx"
+import Home from "@/components/Home.tsx"
 
 export default function Page()
 {
-    return <></>//<App/>
+    return <Home/>
 }

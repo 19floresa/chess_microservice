@@ -1,7 +1,7 @@
 "use client"
 //import { useState } from 'react'
 import Image from 'next/image'
-import '@/styles/App.css'
+import '@/styles/Vs.css'
 import { Chessboard } from "@/engine/chessboard.ts"
 import GameStatus from "@/components/gameStatus.tsx"
 //import type { Socket } from "socket.io-client"
