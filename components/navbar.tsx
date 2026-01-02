@@ -6,11 +6,11 @@ import Link from "next/link"
 import "@/styles/navbar.css"
 
 const items: string[][] = [ 
-                            [ "Login",     "/login" ],
-                            [ "Register",  "/register" ],
-                            [ "Play Vs.",  "/vs" ],
-                            [ "Play Solo", "/" ], 
-                            [ "Replay",    "/replay" ],
+                            [ "Login",    "/login" ],
+                            [ "Register", "/register" ],
+                            [ "Play Vs.", "/vs" ],
+                            [ "Home",     "/" ], 
+                            [ "Replay",   "/replay" ],
                           ]
 
 function NavbarItem({ name, link, isActive }: {name: string, link: string, isActive: string})
