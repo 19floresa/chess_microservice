@@ -1,16 +1,13 @@
 {
   "dependencies": {
     "cookies-next": "^6.1.1",
-    "eslint": "^9.39.1",
     "install": "^0.13.0",
     "jsonwebtoken": "^9.0.3",
     "next": "^16.0.3",
     "npm": "^11.6.4",
-    "prettier": "^3.6.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "socket.io-client": "^4.8.2",
-    "ts-node": "^10.9.2"
+    "socket.io-client": "^4.8.2"
   },
   "scripts": {
     "dev": "next dev",
@@ -23,7 +20,10 @@
     "@types/node": "^24.10.1",
     "@types/react": "19.2.6",
     "baseline-browser-mapping": "^2.9.11",
+    "eslint": "^9.39.2",
     "jest": "^30.2.0",
+    "prettier": "^3.7.4",
+    "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   }
 }
