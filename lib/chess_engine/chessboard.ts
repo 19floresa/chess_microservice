@@ -1,4 +1,4 @@
-export class Chessboard 
+export default class Chessboard 
 {
     #gameBoard: string[][]
     constructor()
