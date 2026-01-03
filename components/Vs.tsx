@@ -1,16 +1,14 @@
 "use client"
-//import { useState } from 'react'
-import Image from 'next/image'
-import '@/styles/Vs.css'
-import { Chessboard } from "@/engine/chessboard.ts"
-import GameStatus from "@/components/gameStatus.tsx"
-//import type { Socket } from "socket.io-client"
-
-import { useRouter } from 'next/navigation';
-import { socket } from "@/socket"
 import { useEffect, useState } from "react"
-import searchGame from "@/libApi/searchGameApi"
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { socket } from "@/socket"
 import { getCookie } from "cookies-next"
+
+import Chessboard from "@/engine/chessboard.ts"
+import GameStatus from "@/components/gameStatus.tsx"
+import searchGame from "@/libApi/searchGameApi"
+import '@/styles/Vs.css'
 
 
 interface positionProp 
@@ -180,6 +178,9 @@ function Vs()
                             // choose where to move piece
                             console.log(`Player moving: (${xPos}, ${yPos}) to (${x}, ${y}).`)
                             chessboard.move({ x: xPos, y: yPos, x2: x, y2: y })
+
+                            // TODO: handle promotion
+                            // TODO: Handle win condition
                             setChessboard(chessboard)
                         }
                     }
