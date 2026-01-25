@@ -1,68 +1,16 @@
 "use client"
 import { useEffect, useState } from "react"
-import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { socket } from "@/socket"
 import { getCookie } from "cookies-next"
 
 import Chessboard from "@/engine/chessboard.ts"
 import GameStatus from "@/components/gameStatus.tsx"
+import GameBoard from "@/components/GameBoard.tsx"
 import searchGame from "@/libApi/searchGameApi"
+
 import '@/styles/Vs.css'
-
-
-interface positionProp 
-{
-  x: number
-  y: number
-}
-
-function chooseSquareColor( {x, y}: positionProp): string
-{
-  const xPos = x % 2
-  const yPos = y % 2
-  if ((xPos === 0 && yPos === 0) || // even rows pattern
-      (xPos === 1 && yPos === 1))   // odd rows pattern
-  {
-    return "light"
-  }
-  
-  return "dark"
-}
-
-function chooseImg(name: string)
-{
-  if (name === "") return null
-  return `/${name}.svg`
-}
-
-function Square({ x, y, handleBoard, handleClick }: { x: number, y: number, 
-                                                      handleBoard: ({ x, y }: positionProp) => string, 
-                                                      handleClick: ({ x, y }: positionProp) => void} )
-{
-  const color: string = chooseSquareColor({ x, y })
-  const name: string = handleBoard({x, y})
-  const img = chooseImg(name)
-  return ( 
-      <button className={`square ${color}`} onClick={() => handleClick({ x, y })} >
-        { (img !== null) ? <Image src={img}  alt={img} width="100" height="100" className='image'/> : null }
-      </button>)
-}
-
-function ChessRow({ y, handleBoard, handleClick }: { y: number, 
-                                                     handleBoard: ({ x, y }: positionProp) => string, 
-                                                     handleClick: ({ x, y }: positionProp) => void} )
-{
-  const col = [ 0, 1, 2, 3, 4, 5, 6 , 7 ]
-  const chessCol = col.map((idx, key) => <Square key={key} x={idx} y={y} handleBoard={handleBoard} handleClick={handleClick}/>)
-  return (
-    <>
-      <div className='row'>
-        {chessCol}
-      </div>
-    </>
-  )
-}
+import { positionProp } from '@/lib/types/props.ts'
 
 function Vs() 
 {
@@ -190,12 +138,10 @@ function Vs()
         }
     }
 
-    const rows = [ 0, 1, 2, 3, 4, 5, 6 , 7 ]
-    const chessRows = rows.map((idx, key) => <ChessRow key={key} y={idx} handleBoard={handleBoard} handleClick={handleClick}/>)
     return (
         <>
         <div>
-            {chessRows}
+            <GameBoard handleBoard={handleBoard} handleClick={handleClick}/>
         </div>
         <div className="infoBox">
             <GameStatus/>
