@@ -39,7 +39,7 @@ function Vs()
                 }
                 else
                 {             
-                    console.log(resp)                          
+                    //console.log(resp)                          
                     if (resp.status === "ok")
                     {
                         const { color } = resp
@@ -105,11 +105,11 @@ function Vs()
         const [ xPos, yPos ] = firstPick
         if ((xPos === -1) && (yPos === -1)) // pick first piece
         {
-        if (/*(currentPlayer && player) && */(pieceColor !== "") && (pieceColor === color))
-        {
-            const newFirstPick = [ x, y ]
-            setFirstPick(newFirstPick)
-        }
+            if (/*(currentPlayer && player) && */(pieceColor !== "") && (pieceColor === color))
+            {
+                const newFirstPick = [ x, y ]
+                setFirstPick(newFirstPick)
+            }
         }
         else
         {

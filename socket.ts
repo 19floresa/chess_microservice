@@ -5,4 +5,4 @@ import type { Socket } from "socket.io-client"
 
 const URL = process.env.NODE_ENV === 'production' ? undefined : 'http://localhost:3056';
 
-export const socket: Socket = io(URL, { autoConnect: true }) // TODO: set to false, https://socket.io/how-to/use-with-react
+export const socket: Socket = io(URL, { autoConnect: false }) // TODO: set to false, https://socket.io/how-to/use-with-react
