@@ -3,17 +3,27 @@ export default class Chessboard
     #gameBoard: string[][]
     constructor()
     {
+        this.clearBoard()
+    }
+
+
+    clearBoard()
+    {
         const gameBoard: string[][] = []
         for (let i = 0; i < 8; i++)
         {
             gameBoard.push(new Array(8).fill(""))
         }
+        this.#gameBoard = gameBoard
+    }
 
+    init()
+    {
+        const gameBoard = this.#gameBoard
         gameBoard[0] = [ "rook_dark",  "knight_dark",  "bishop_dark",  "queen_dark",  "king_dark",  "bishop_dark",  "knight_dark",  "rook_dark" ]
         gameBoard[1] = [ "pawn_dark",  "pawn_dark",    "pawn_dark",    "pawn_dark",   "pawn_dark",  "pawn_dark",    "pawn_dark",    "pawn_dark" ]
         gameBoard[6] = [ "pawn_light", "pawn_light",   "pawn_light",   "pawn_light",  "pawn_light", "pawn_light",   "pawn_light",   "pawn_light" ]
         gameBoard[7] = [ "rook_light", "knight_light", "bishop_light", "queen_light", "king_light", "bishop_light", "knight_light", "rook_light" ]
-
         this.#gameBoard = gameBoard
     }
 
