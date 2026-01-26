@@ -27,6 +27,9 @@ function Vs()
         async function onConnect()
         {
             console.log("Player connected.")
+            chessboard.clearBoard()
+            setChessboard(chessboard)
+            
             const userId: number = parseInt(await getCookie("id", { domain: "http://localhost:3000" }))
             const body = await searchGame(userId)
             const gameId: number = body.gameId ?? -1
@@ -39,7 +42,7 @@ function Vs()
                 }
                 else
                 {             
-                    //console.log(resp)                          
+                    console.log(resp)                          
                     if (resp.status === "ok")
                     {
                         const { color } = resp
@@ -68,12 +71,25 @@ function Vs()
         {
             console.log("Start game")
             setStartGame(true)
+            chessboard.init()
+            setChessboard(chessboard)
+        }
+
+        function onEndGame({ isWinnerLight })
+        {
+            const winner: string = isWinnerLight ? "light" : 'dark'
+            console.log(`Player Won: ${winner}`)
+            setIsConnected(false)
+            setStartGame(false)
+            setColor("")
+            socket.disconnect()
         }
 
         socket.on("connect", onConnect)
         socket.on("disconnect", onDisconnect)
         socket.on("startGame", onStartGame)
         socket.on("validMoveOpponent", onValidMoveOpponent)
+        socket.on("endGame", onEndGame)
 
         return (
         () =>
@@ -82,6 +98,7 @@ function Vs()
             socket.off("disconnect", onDisconnect)
             socket.off("startGame", onStartGame)
             socket.off("validMoveOpponent", onValidMoveOpponent)
+            socket.off("endGame", onEndGame)
         })
     }, [])
 
