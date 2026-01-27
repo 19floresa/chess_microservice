@@ -1,9 +1,10 @@
 export default class Chessboard 
 {
     #gameBoard: string[][]
-    constructor()
+    constructor( init: boolean = false)
     {
         this.clearBoard()
+        if (init) this.init()
     }
 
 
@@ -70,7 +71,7 @@ export default class Chessboard
                 newPiece = `knight_${color}`
                 break
             default:
-                throw Error(`Pawn pronotion is not valid: ${value}`)
+                throw Error(`Pawn promotion is not valid: ${value}`)
         }
         this.#setPiece(newPiece, x, y)
     }
