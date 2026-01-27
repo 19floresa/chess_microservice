@@ -1,11 +1,11 @@
 import { socket } from "@/socket"
 
-function connect()
+function onClickConnect()
 {
     socket.connect()
 }
 
-function disconnect()
+function onClickDisconnect()
 {
     socket.disconnect()
 }
@@ -15,8 +15,8 @@ export function ConnectionManager()
     return (
     <>
         <div>
-            <button onClick={connect}>Find Game</button>
-            <button onClick={disconnect}>End Game</button>
+            <button onClick={onClickConnect}>Find Game</button>
+            <button onClick={onClickDisconnect}>End Game</button>
         </div>
     </>)
 }
