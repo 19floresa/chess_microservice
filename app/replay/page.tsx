@@ -11,6 +11,8 @@ export default function Page()
     const [ prev, setPrev ] = useState([])
     const [ next, setNext ] = useState([[ 1, 1, 1, 2 ], [ 1, 2, 1, 3 ], [ 1, 3, 1, 4 ] ])
     const [ pageNumber, setPageNumber ] = useState(1)
+    const [ pageNumberMax, setPageNumberMax ] = useState(5)
+    const [ toggleButtons, setToggleButtons ] = useState([ false, true ])
 
     const handleClick = ({ x, y }: positionProp) => { return }
     const handleBoard = ({ x, y }: positionProp): string => board.getPieceName(x, y)
@@ -55,12 +57,18 @@ export default function Page()
 
     async function onClickPagePrev()
     {
-        setPageNumber(pageNumber - 1)
+        const newPageNumber = pageNumber - 1
+        const newToggleButtons = (newPageNumber === 1)  ? [ false, true] : [ true, true ]
+        setToggleButtons(newToggleButtons)
+        setPageNumber(newPageNumber)
     }
 
     async function onClickPageNext()
     {
-        setPageNumber(pageNumber + 1)
+        const newPageNumber = pageNumber + 1
+        const newToggleButtons = (newPageNumber === pageNumberMax)  ? [ true, false ] : [ true, true ]
+        setToggleButtons(newToggleButtons)
+        setPageNumber(newPageNumber)
     }
 
     return (
@@ -72,9 +80,9 @@ export default function Page()
             <button onClick={onClickNext}>Next Move</button>
         </div>
         <div>
-            <button onClick={onClickPagePrev}>Previous Games</button>
+           { toggleButtons[0] ? <button onClick={onClickPagePrev}>Previous Games</button> : null }
             {pageNumber}
-            <button onClick={onClickPageNext}>Next Games</button>
+            { toggleButtons[1] ? <button onClick={onClickPageNext}>Next Games</button> : null }
         </div>
     </>
     )
