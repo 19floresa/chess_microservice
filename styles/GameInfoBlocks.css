@@ -1,0 +1,11 @@
+.infoBlockContainer {
+    width: 20vw;
+    height: 100vh;
+    background-color: lightblue;
+    opacity: 0.6;
+}
+
+.infoBlock{
+    height:136px;
+    background-color: red;
+}
