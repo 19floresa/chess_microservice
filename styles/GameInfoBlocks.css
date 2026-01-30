@@ -1,11 +1,52 @@
 .infoBlockContainer {
     width: 20vw;
-    height: 100vh;
+    height: 90vh;
     background-color: lightblue;
     opacity: 0.6;
+    display: block;
 }
 
-.infoBlock{
-    height:136px;
+.infoBlock {
+    height: 15%;
+    width: 90%;
     background-color: red;
+    border: 1px black solid;
+    display: block;
+    margin: 10 auto;
+}
+
+.headerBlock {
+    height: 50%;
+    width: 100%;
+    display: flex;
+}
+
+.imageBlock {
+    width: 30%;
+    /* border: white solid; */
+    border-bottom: 1px white solid;
+    border-right: 1px white solid;
+}
+
+.pieceBlock {
+    padding-left: 20%;
+    padding-top: 5%;
+}
+
+.statusBlock {
+    width: 70%;
+    border-bottom: 1px white solid;
+    font-size: 3vw;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    /* border: white solid; */
+}
+
+.nameBlock {
+    height: 50%;
+    width: 100%;
+    font-size: 3vw;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    /* background-color: blue; */
 }
