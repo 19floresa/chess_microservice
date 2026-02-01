@@ -30,10 +30,6 @@ function Block({ replay, onClickSteps }: { replay: replayProp, onClickSteps: (a:
 
 export default function Replays({ replays, onClickSteps }: { replays: replayProp[], onClickSteps: ( a: gameStep[]) => void })
 {
-    // const opponentName = "19floresa"
-    // const isLight = true
-    // const isWinner = true
-    // const status = "Draw"// "Win "", "Loss", "Draw"
     const [ pageNumber, setPageNumber ] = useState(1)
     const [ pageNumberMax, setPageNumberMax ] = useState(1)
 
