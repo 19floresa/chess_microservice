@@ -24,6 +24,12 @@ export default function Register()
             return
         }
 
+        if (username.length < 3 || username.length > 9)
+        {
+            console.log("Username must be between 3 to 9 characters.")
+            return
+        }
+
         const res = await register(u, p)
         if (res.status !== 200)
         {
