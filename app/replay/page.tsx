@@ -1,41 +1,74 @@
 "use client"
+
 import { useState } from "react"
-
 import GameBoardMock from "@/components/GameBoardMock"
-import GameInfoBlock from "@/components/GameInfoBlock"
+import Replays from "@/components/Replays.tsx"
+import replayProp from '@/lib/types/replayProp'
 import { gameStep } from "@/lib/types/gameSteps"
-
-const pageNumberMin: number = 1
-const pageNumberMax: number = 5
 
 export default function Page()
 {
-    const steps: gameStep[] = [ [ 1, 1, 1, 2, 0 ], [ 1, 2, 1, 3, 0 ], [ 1, 3, 1, 4, 0 ] ]
-    const [ pageNumber, setPageNumber ] = useState(1)
+    const [ prev, setPrev ] = useState([])
+    const [ next, setNext ] = useState([])
 
-    async function onClickPagePrev()
+    function onClickSteps(gameSteps: gameStep[])
     {
-        if (pageNumber === pageNumberMin) return
-        const newPageNumber = pageNumber - 1
-        setPageNumber(newPageNumber)
+        setPrev([])
+        setNext(gameSteps)
     }
-
-    async function onClickPageNext()
-    {
-        if (pageNumber === pageNumberMax) return
-        const newPageNumber = pageNumber + 1
-        setPageNumber(newPageNumber)
-    }
+    
+    const replays: replayProp[] = [
+        {
+            opponentName: "19floresa",
+            isLight: true,
+            isWinner: true,
+            start: "1",
+            end: "2",
+            status: "Draw",
+            steps: [ [ 1, 1, 1, 2, 0 ], [ 1, 2, 1, 3, 0 ], [ 1, 3, 1, 4, 0 ] ]
+        },
+        {
+            opponentName: "opponent1",
+            isLight: false,
+            isWinner: false,
+            start: "3",
+            end: "4",
+            status: "Win ",
+            steps: [ [ 1, 1, 1, 2, 0 ], [ 1, 2, 1, 3, 0 ], [ 1, 3, 1, 4, 0 ] ]
+        },
+        {
+            opponentName: "opponent2",
+            isLight: false,
+            isWinner: false,
+            start: "3",
+            end: "4",
+            status: "Win ",
+            steps: [ [ 1, 1, 1, 2, 0 ], [ 1, 2, 1, 3, 0 ], [ 1, 3, 1, 4, 0 ] ]
+        },
+        {
+            opponentName: "opponent3",
+            isLight: false,
+            isWinner: false,
+            start: "3",
+            end: "4",
+            status: "Win ",
+            steps: [ [ 1, 1, 1, 2, 0 ], [ 1, 2, 1, 3, 0 ], [ 1, 3, 1, 4, 0 ] ]
+        },
+        {
+            opponentName: "opponent4",
+            isLight: false,
+            isWinner: false,
+            start: "3",
+            end: "4",
+            status: "Win ",
+            steps: [ [ 1, 1, 1, 2, 0 ], [ 1, 2, 1, 3, 0 ], [ 1, 3, 1, 4, 0 ] ]
+        }
+    ]
 
     return (
     <>
-        <GameBoardMock steps={steps}/>
-        <GameInfoBlock/>
-        {/* <div>
-            <button onClick={onClickPagePrev}>Previous Games</button>
-            {pageNumber}
-            <button onClick={onClickPageNext}>Next Games</button>
-        </div> */}
+        <GameBoardMock prev={prev} next={next} setPrev={setPrev} setNext={setNext}/>
+        <Replays replays={replays} onClickSteps={onClickSteps}/>
     </>
     )
 }
