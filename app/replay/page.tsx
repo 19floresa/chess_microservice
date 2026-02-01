@@ -22,8 +22,6 @@ export default function Page()
             opponentName: "19floresa",
             isLight: true,
             isWinner: true,
-            start: "1",
-            end: "2",
             status: "Draw",
             steps: [ [ 1, 1, 1, 2, 0 ], [ 1, 2, 1, 3, 0 ], [ 1, 3, 1, 4, 0 ] ]
         },
@@ -31,8 +29,6 @@ export default function Page()
             opponentName: "opponent1",
             isLight: false,
             isWinner: false,
-            start: "3",
-            end: "4",
             status: "Win ",
             steps: [ [ 1, 1, 1, 2, 0 ], [ 1, 2, 1, 3, 0 ], [ 1, 3, 1, 4, 0 ] ]
         },
@@ -40,8 +36,6 @@ export default function Page()
             opponentName: "opponent2",
             isLight: false,
             isWinner: false,
-            start: "3",
-            end: "4",
             status: "Win ",
             steps: [ [ 1, 1, 1, 2, 0 ], [ 1, 2, 1, 3, 0 ], [ 1, 3, 1, 4, 0 ] ]
         },
@@ -49,8 +43,6 @@ export default function Page()
             opponentName: "opponent3",
             isLight: false,
             isWinner: false,
-            start: "3",
-            end: "4",
             status: "Win ",
             steps: [ [ 1, 1, 1, 2, 0 ], [ 1, 2, 1, 3, 0 ], [ 1, 3, 1, 4, 0 ] ]
         },
@@ -58,8 +50,6 @@ export default function Page()
             opponentName: "opponent4",
             isLight: false,
             isWinner: false,
-            start: "3",
-            end: "4",
             status: "Win ",
             steps: [ [ 1, 1, 1, 2, 0 ], [ 1, 2, 1, 3, 0 ], [ 1, 3, 1, 4, 0 ] ]
         },
@@ -67,8 +57,6 @@ export default function Page()
             opponentName: "opponent5",
             isLight: false,
             isWinner: false,
-            start: "3",
-            end: "4",
             status: "Win ",
             steps: [ [ 4, 1, 4, 2, 0 ], [ 4, 2, 4, 3, 0 ], [ 4, 3, 4, 4, 0 ] ]
         }
