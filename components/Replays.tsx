@@ -9,8 +9,7 @@ const pageNumberMin: number = 1
 
 function Block({ replay, onClickSteps }: { replay: replayProp, onClickSteps: (a: gameStep[]) => void } )
 {
-    const [ steps, setSteps ] = useState(replay.steps)
-    const { opponentName, isLight, isWinner, start, end, status} = replay
+    const { opponentName, isLight, isWinner, start, end, status, steps} = replay
     const kingName = `/king_${isLight ? "light" : "dark"}.svg`
     return (        
         <div className='infoBlock' onClick={() => onClickSteps(steps)}>
