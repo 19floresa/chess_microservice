@@ -6,11 +6,15 @@ import { useState } from "react"
 import { positionProp } from "@/lib/types/props"
 import { gameStep } from "@/lib/types/gameSteps"
 
-export default function GameBoardMock({ steps }: { steps: gameStep[] })
+export default function GameBoardMock({ prev, next, setPrev, setNext }: { prev: gameStep[], next: gameStep[], setPrev: any, setNext: any })
 {
-    const [ board, setBoard ] = useState(new Chessboard(true))
-    const [ prev, setPrev ] = useState([])
-    const [ next, setNext ] = useState(steps)
+    const [ board, setBoard ] = useState(new Chessboard())
+
+    // Refresh game board only when a new replay is loaded
+    if (prev.length === 0 && next.length > 0)
+    {
+        board.refresh()
+    }
 
     const handleClick = ({ x, y }: positionProp) => { return }
     const handleBoard = ({ x, y }: positionProp): string => board.getPieceName(x, y)
@@ -46,8 +50,7 @@ export default function GameBoardMock({ steps }: { steps: gameStep[] })
     {
         const newNext = [ ...prev, ...next ]
         const newPrev = []
-        board.clearBoard()
-        board.init()
+        board.refresh()
         setPrev(newPrev)
         setNext(newNext)
         setBoard(board)
