@@ -33,14 +33,7 @@ export default function Replays({ replays, onClickSteps }: { replays: replayProp
     // const opponentName = "19floresa"
     // const isLight = true
     // const isWinner = true
-    // const start = generateTimeUTC()
-    // console.log(start)
-    // const end = 0
     // const status = "Draw"// "Win "", "Loss", "Draw"
-    // const steps = [ [ 1, 1, 1, 2, 0 ], [ 1, 2, 1, 3, 0 ], [ 1, 3, 1, 4, 0 ] ]
-    // console.log(start)
-    // const kingName = `/king_${isLight ? "light" : "dark"}.svg`
-
     const [ pageNumber, setPageNumber ] = useState(1)
     const [ pageNumberMax, setPageNumberMax ] = useState(1)
 
