@@ -6,7 +6,7 @@
     display: block;
 }
 
-.infoBlock {
+.infoBlockLose {
     height: 15%;
     width: 90%;
     background-color: #FF0000;
@@ -16,13 +16,32 @@
     border-radius: 25px;
 }
 
-.infoBlock:hover {
+.infoBlockLose:hover {
     background-color: #CC0000;
     cursor: pointer;
 }
 
-.infoBlock:active {
+.infoBlockLose:active {
     background-color: #BB0000;
+}
+
+.infoBlockWin {
+    height: 15%;
+    width: 90%;
+    background-color: #00FF00;
+    border: 1px black solid;
+    display: block;
+    margin: 10 auto;
+    border-radius: 25px;
+}
+
+.infoBlockWin:hover {
+    background-color: #00CC00;
+    cursor: pointer;
+}
+
+.infoBlockWin:active {
+    background-color: #00BB00;
 }
 
 .headerBlock {

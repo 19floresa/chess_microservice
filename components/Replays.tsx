@@ -1,6 +1,5 @@
 import '@/styles/Replays.css'
 import Image from 'next/image'
-import generateTimeUTC from "@/lib/time/time"
 import { gameStep } from '@/lib/types/gameSteps'
 import replayProp from '@/lib/types/replayProp'
 import { useState } from "react"
@@ -9,10 +8,11 @@ const pageNumberMin: number = 1
 
 function Block({ replay, onClickSteps }: { replay: replayProp, onClickSteps: (a: gameStep[]) => void } )
 {
-    const { opponentName, isLight, isWinner, start, end, status, steps} = replay
+    const { opponentName, isLight, isWinner, status, steps} = replay
     const kingName = `/king_${isLight ? "light" : "dark"}.svg`
+    const classColor = isWinner ? "infoBlockWin" : "infoBlockLose"
     return (        
-        <div className='infoBlock' onClick={() => onClickSteps(steps)}>
+        <div className={classColor} onClick={() => onClickSteps(steps)}>
             <div className='headerBlock'>
                 <div className='imageBlock'>
                     <Image src={kingName}  alt={kingName} width="45" height="45" className='pieceBlock'/>
