@@ -1,14 +1,18 @@
 export default class Chessboard 
 {
     #gameBoard: string[][]
-    constructor( init: boolean = false)
+    constructor()
     {
-        this.clearBoard()
-        if (init) this.init()
+        this.#clearBoard()
     }
 
+    refresh()
+    {
+        this.#clearBoard()
+        this.#init()
+    }
 
-    clearBoard()
+    #clearBoard()
     {
         const gameBoard: string[][] = []
         for (let i = 0; i < 8; i++)
@@ -18,7 +22,7 @@ export default class Chessboard
         this.#gameBoard = gameBoard
     }
 
-    init()
+    #init()
     {
         const gameBoard = this.#gameBoard
         gameBoard[0] = [ "rook_dark",  "knight_dark",  "bishop_dark",  "queen_dark",  "king_dark",  "bishop_dark",  "knight_dark",  "rook_dark" ]
