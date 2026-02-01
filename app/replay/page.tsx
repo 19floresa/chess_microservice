@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import GameBoardMock from "@/components/GameBoardMock"
+import GameBoardReplays from "@/components/GameBoardReplays"
 import Replays from "@/components/Replays.tsx"
 import replayProp from '@/lib/types/replayProp'
 import { gameStep } from "@/lib/types/gameSteps"
@@ -62,12 +62,21 @@ export default function Page()
             end: "4",
             status: "Win ",
             steps: [ [ 1, 1, 1, 2, 0 ], [ 1, 2, 1, 3, 0 ], [ 1, 3, 1, 4, 0 ] ]
+        },
+        {
+            opponentName: "opponent5",
+            isLight: false,
+            isWinner: false,
+            start: "3",
+            end: "4",
+            status: "Win ",
+            steps: [ [ 4, 1, 4, 2, 0 ], [ 4, 2, 4, 3, 0 ], [ 4, 3, 4, 4, 0 ] ]
         }
     ]
 
     return (
     <>
-        <GameBoardMock prev={prev} next={next} setPrev={setPrev} setNext={setNext}/>
+        <GameBoardReplays prev={prev} next={next} setPrev={setPrev} setNext={setNext}/>
         <Replays replays={replays} onClickSteps={onClickSteps}/>
     </>
     )

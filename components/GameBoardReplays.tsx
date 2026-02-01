@@ -6,7 +6,7 @@ import { useState } from "react"
 import { positionProp } from "@/lib/types/props"
 import { gameStep } from "@/lib/types/gameSteps"
 
-export default function GameBoardMock({ prev, next, setPrev, setNext }: { prev: gameStep[], next: gameStep[], setPrev: any, setNext: any })
+export default function GameBoardReplays({ prev, next, setPrev, setNext }: { prev: gameStep[], next: gameStep[], setPrev: any, setNext: any })
 {
     const [ board, setBoard ] = useState(new Chessboard())
 
@@ -26,7 +26,7 @@ export default function GameBoardMock({ prev, next, setPrev, setNext }: { prev: 
         const newPrev = prev.slice()
         const n = newNext.shift()
         newPrev.push(n)
-        const [ x, y, x2, y2, promote ] = n
+        const [ x, y, x2, y2, promote ] = n // TODO: handle promotions
         board.move({ x, y, x2, y2 })
         setPrev(newPrev)
         setNext(newNext)
@@ -39,7 +39,7 @@ export default function GameBoardMock({ prev, next, setPrev, setNext }: { prev: 
         const newPrev = prev.slice()
         const p = newPrev.pop()
         const newNext = [p, ...next]
-        const [ x2, y2, x, y, promote ] = p
+        const [ x2, y2, x, y, promote ] = p // TODO: handle promotions
         board.move({ x, y, x2, y2 })
         setPrev(newPrev)
         setNext(newNext)
