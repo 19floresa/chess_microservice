@@ -10,9 +10,9 @@ function Block({ replay, onClickSteps }: { replay: replayProp, onClickSteps: (a:
 {
     const { opponentName, isLight, isWinner, status, steps} = replay
     const kingName = `/king_${isLight ? "light" : "dark"}.svg`
-    const classColor = isWinner ? "infoBlockWin" : "infoBlockLose"
+    const classColor = isWinner ? "win" : "lose"
     return (        
-        <div className={classColor} onClick={() => onClickSteps(steps)}>
+        <div className={`infoBlock ${classColor}`} onClick={() => onClickSteps(steps)}>
             <div className='headerBlock'>
                 <div className='imageBlock'>
                     <Image src={kingName}  alt={kingName} width="45" height="45" className='pieceBlock'/>
@@ -28,10 +28,10 @@ function Block({ replay, onClickSteps }: { replay: replayProp, onClickSteps: (a:
     )
 }
 
-export default function Replays({ replays, onClickSteps }: { replays: replayProp[], onClickSteps: ( a: gameStep[]) => void })
+export default function Replays({ replays, onClickSteps, getReplays }: { replays: replayProp[], onClickSteps: any, getReplays: any })
 {
     const [ pageNumber, setPageNumber ] = useState(1)
-    const [ pageNumberMax, setPageNumberMax ] = useState(1)
+    const [ pageNumberMax, setPageNumberMax ] = useState(5)
 
     // Total number of games
     const len = replays.length
@@ -50,7 +50,11 @@ export default function Replays({ replays, onClickSteps }: { replays: replayProp
 
     async function onClickPageNext()
     {
-        if (pageNumber === pageNumberMax) return
+        if (pageNumber === pageNumberMax) 
+        {
+            const more = await getReplays(pageNumber * 5)
+            if (more === false)return
+        }
         const newPageNumber = pageNumber + 1
         setPageNumber(newPageNumber)
     }
@@ -67,7 +71,7 @@ export default function Replays({ replays, onClickSteps }: { replays: replayProp
     return (
         <>   
             <div className='infoBlockContainer'> 
-                <div>
+                <div className="replays">
                     {replayBlocks}
                 </div>
                 <div>

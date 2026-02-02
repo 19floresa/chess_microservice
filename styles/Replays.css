@@ -6,41 +6,38 @@
     display: block;
 }
 
-.infoBlockLose {
-    height: 15%;
+.infoBlock {
+    height: 18%;
     width: 90%;
-    background-color: #FF0000;
     border: 1px black solid;
     display: block;
     margin: 10 auto;
     border-radius: 25px;
 }
 
-.infoBlockLose:hover {
+.lose {
+    background-color: #FF0000;
+}
+
+.lose:hover {
     background-color: #CC0000;
     cursor: pointer;
 }
 
-.infoBlockLose:active {
+.lose:active {
     background-color: #BB0000;
 }
 
-.infoBlockWin {
-    height: 15%;
-    width: 90%;
+.win {
     background-color: #00FF00;
-    border: 1px black solid;
-    display: block;
-    margin: 10 auto;
-    border-radius: 25px;
 }
 
-.infoBlockWin:hover {
+.win:hover {
     background-color: #00CC00;
     cursor: pointer;
 }
 
-.infoBlockWin:active {
+.win:active {
     background-color: #00BB00;
 }
 
@@ -52,7 +49,6 @@
 
 .imageBlock {
     width: 30%;
-    /* border: white solid; */
     border-bottom: 1px white solid;
     border-right: 1px white solid;
 }
@@ -68,7 +64,6 @@
     font-size: 3vw;
     font-family: monospace;
     text-align: center;
-    /* border: white solid; */
 }
 
 .nameBlock {
@@ -77,5 +72,8 @@
     font-size: 3vw;
     font-family: monospace;
     text-align: center;
-    /* background-color: blue; */
+}
+
+.replays {
+    height: 85%;
 }
