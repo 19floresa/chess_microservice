@@ -136,4 +136,9 @@ export default class Chessboard
             }
         }
     }
+
+    ___setPieceOverride(piece: string, x: number, y: number)
+    {
+        this.#setPiece(piece, x, y)
+    }
 }
