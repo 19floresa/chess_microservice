@@ -1,1 +1,1 @@
-export type gameStep = [ number, number, number, number, number]
+export type gameStep = [ number, number, number, number, number, number ]

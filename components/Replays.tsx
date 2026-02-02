@@ -31,7 +31,7 @@ function Block({ replay, onClickSteps }: { replay: replayProp, onClickSteps: (a:
 export default function Replays({ replays, onClickSteps, getReplays }: { replays: replayProp[], onClickSteps: any, getReplays: any })
 {
     const [ pageNumber, setPageNumber ] = useState(1)
-    const [ pageNumberMax, setPageNumberMax ] = useState(5)
+    const [ pageNumberMax, setPageNumberMax ] = useState(1)
 
     // Total number of games
     const len = replays.length
