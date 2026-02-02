@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react"
 import GameBoardReplays from "@/components/GameBoardReplays"
 import Replays from "@/components/Replays.tsx"
-import replayProp from '@/lib/types/replayProp'
 import { gameStep } from "@/lib/types/gameSteps"
 import retrieveReplay from "@/lib/api/replayApi"
 import { getCookie } from "cookies-next"
@@ -25,8 +24,9 @@ export default function Page()
     {
         const playerId: number = parseInt(await getCookie("id", { domain: "http://localhost:3000" }))
         const body = await retrieveReplay(playerId, gameId)
-        console.log(body.games)
-        setReplays(body.games)
+        const newReplays = [ ...replays, ...body.games ]
+        setReplays(newReplays)
+        return body.games.length !== 0
     }
 
     useEffect(() =>
@@ -38,7 +38,7 @@ export default function Page()
     <>
         <GameBoardReplays prev={prev} next={next} setPrev={setPrev} setNext={setNext}/>
         <Suspense fallback={<div>loading data...</div>}>
-            <Replays replays={replays} onClickSteps={onClickSteps}/>
+            <Replays replays={replays} onClickSteps={onClickSteps} getReplays={getReplays}/>
         </Suspense>
     </>
     )
