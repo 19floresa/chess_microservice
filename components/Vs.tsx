@@ -144,6 +144,13 @@ function Vs()
                             console.log(`Player moving: (${xPos}, ${yPos}) to (${x}, ${y}).`)
                             chessboard.move({ x: xPos, y: yPos, x2: x, y2: y })
 
+                            const isPromoting = resp.isPromoting
+                            if (isPromoting)
+                            {
+                                const promote = chessboard.askPlayerToPromotePawn(x, y)
+                                chessboard.promote(x, y, promote)
+                            }
+
                             // TODO: handle promotion
                             // TODO: Handle win condition
                             setChessboard(chessboard)
