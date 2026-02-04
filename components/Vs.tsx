@@ -53,10 +53,14 @@ function Vs()
             })
         }
         
-        function onValidMoveOpponent({ x, y, x2, y2 })
+        function onValidMoveOpponent({ x, y, x2, y2, promote })
         {
             console.log(`Opponent moving: (${x}, ${y}) to (${x2}, ${y2}).`)
             chessboard.move({ x, y, x2, y2 })
+            if (promote !== 0)
+            {
+                chessboard.promote(x2, y2, promote)
+            }
             setChessboard(chessboard)
             router.refresh()
         }
@@ -148,7 +152,19 @@ function Vs()
                             if (isPromoting)
                             {
                                 const promote = chessboard.askPlayerToPromotePawn(x, y)
-                                chessboard.promote(x, y, promote)
+                                socket.timeout(5000).emit("promote", { x, y, promote }, (err, resp) =>
+                                {
+                                    if (resp.status === "ok")
+                                    {
+                                        chessboard.promote(x, y, promote)
+                                        router.refresh()
+                                    }
+                                    else
+                                    {
+                                        console.log(resp)
+                                        throw new Error("Promote failed.")
+                                    }
+                                })
                             }
 
                             // TODO: handle promotion
