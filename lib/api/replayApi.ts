@@ -1,6 +1,6 @@
 export default async function retrieveReplay(playerId: number, gameId: number)
 {
-    const res = await fetch('http://localhost:3056/game/replay', 
+    const res = await fetch('http://app:3056/game/replay', 
     { 
         method: 'POST', 
         credentials: 'include',

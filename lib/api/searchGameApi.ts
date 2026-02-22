@@ -1,6 +1,6 @@
 export default async function searchGame(id: number)
 {
-    const res = await fetch('http://localhost:3056/game/search', 
+    const res = await fetch('http://app:3056/game/search', 
     { 
       method: 'POST', 
       headers: { "Content-Type": "application/json" },

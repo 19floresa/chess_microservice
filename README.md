@@ -81,3 +81,11 @@ npm i
 ```bash
 npm run dev
 ```
+
+# Troubleshooting
+
+## Postgres
+If you are running a database locally, you can temporarly stop it with the following command.
+```bash
+sudo systemctl stop postgresql
+```
