@@ -10,6 +10,7 @@ Additionally, it manages:
 
 # Requirements
 Node 20.20.0+
+Docker 29.9.1+
 
 # Install
 Their are two options for running this project, using docker or the manual installment.
