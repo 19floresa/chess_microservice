@@ -1,8 +1,50 @@
 
+# Description
+
+<img src="./public/chess_icon.svg" alt="Game Icon" width="50" height="50">
+
+
+
 # Requirements
 Node 20.20.0+
 
 # Install
+Their are two options for running this project, using docker or the manual installment.
+
+# Docker Installment
+The main entry point is the database microservice
+```bash
+git clone git@github.com:19floresa/chess_database.git
+```
+```bash
+cd chess_database
+```
+## Configure `.env`
+
+```
+PORT=XXX
+NODE_ENV=development
+DATABASE_USERNAME=XXX
+DATABASE_PASSWORD=XXX
+DATABASE_NAME=XXX
+DATABASE_PORT=XXX
+```
+## Configure `docker-compose.yaml`
+```
+POSTGRES_PASSWORD: XXX # Same as DATABASE_PASSWORD
+POSTGRES_USER: XXX # Same as DATABASE_USERNAME
+POSTGRES_DB: XXX # Same as DATABASE_NAME
+```
+## Run the application
+```
+docker compose build  && docker compose up
+```
+
+## Website
+In order to play, first register/login, then go to the 'Vs' tab to face off against another player.
+```
+http://localhost:3000/
+```
 
 # Manual Installment
 ```bash
