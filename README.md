@@ -1,8 +1,11 @@
 
 # Description
+This application manages a chess game between two players.
 
-<img src="./public/chess_icon.svg" alt="Game Icon" width="50" height="50">
-
+Additionally, it manages:
+1. The game state of multpile concurrent games.
+2. Register/Login of players.
+3. Replay of previous played games.
 
 
 # Requirements
