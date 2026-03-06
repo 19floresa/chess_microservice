@@ -5,3 +5,5 @@ README.md
 .git
 Dockerfile
 .dockerignore
+.vscode
+tests
