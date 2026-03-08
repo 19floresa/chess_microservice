@@ -1,6 +1,6 @@
 export async function register(username: string, password: string)
 {
-    return await fetch('http://localhost:3025/user/register', 
+    return await fetch('http://16.145.81.136:3025/user/register', 
     { 
       method: 'POST', 
       headers: { "Content-Type": "application/json" },
