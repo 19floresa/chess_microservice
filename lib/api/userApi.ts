@@ -1,6 +1,8 @@
+import config from "../config/config"
+
 export async function register(username: string, password: string)
 {
-    return await fetch('http://16.145.81.136:3025/user/register', 
+    return await fetch(`http://${config.URL}:3025/user/register`, 
     { 
       method: 'POST', 
       headers: { "Content-Type": "application/json" },
@@ -10,7 +12,7 @@ export async function register(username: string, password: string)
 
 export async function login(username: string, password: string)
 {
-  return await fetch('http://localhost:3025/user/login', 
+  return await fetch(`http://${config.URL}:3025/user/login`, 
   { 
     method: 'POST', 
     credentials: 'include',
