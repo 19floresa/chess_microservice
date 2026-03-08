@@ -167,8 +167,6 @@ function Vs()
                                 })
                             }
 
-                            // TODO: handle promotion
-                            // TODO: Handle win condition
                             setChessboard(chessboard)
                         }
                     }
